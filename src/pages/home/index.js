@@ -1,9 +1,18 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {FaSearch, FaPlusCircle, FaFacebookF} from 'react-icons/fa'
 import './styles.css'
 import { Link } from 'react-router-dom';
+import { showData, getCategories, getCountry, getPaginatedItems } from '../../services/api.js'
 
-export default function Home() {
+
+export default function Home() { 
+
+    const [categories, setCategories] = useState([]);
+
+    useEffect(() => {     
+        setCategories(getCategories);
+    }, []);;
+    
     return(
         <div className="home-container">
             <header>
@@ -18,10 +27,6 @@ export default function Home() {
                         </button>
                         <select>
                             <option value="style">Style</option>
-                            <option value="Pale ale">Pale ale</option>
-                            <option value="American Pale ale">American Pale ale</option>
-                            <option value="vol Pale ale">vol Pale ale</option>
-                            
                         </select>
                     </form>
                 </div>
@@ -29,39 +34,23 @@ export default function Home() {
             <main>
                 <h2>Choose one category to see the BeerS</h2>
                 <ul>
-                    <li>
-                        <div>
-                            <strong>Pale ale</strong>
-                            <p>strong, good, and beauty</p>
-                            <span>
-                                <Link to="">
-                                    <FaPlusCircle size={40} color="white"></FaPlusCircle>
-                                </Link>
-                            </span>
-                        </div>
-                    </li>
-                    <li>
-                        <div>
-                            <strong>Pale ale</strong>
-                            <p>strong, good, and beauty</p>
-                            <span>
-                                <Link to="">
-                                    <FaPlusCircle size={40} color="white"></FaPlusCircle>
-                                </Link>
-                            </span>
-                        </div>
-                    </li>
-                    <li>
-                        <div>
-                            <strong>Pale ale</strong>
-                            <p>strong, good, and beauty</p>
-                            <span>
-                                <Link to="">
-                                    <FaPlusCircle size={40} color="white"></FaPlusCircle>
-                                </Link>
-                            </span>
-                        </div>
-                    </li>
+                    {categories.map(item =>             
+                        <li>    
+                            <div>
+                            <strong>{item.name}</strong>
+                                <p>strong, good, and beauty</p>
+                                <span>
+                                    <Link to="">
+                                        <FaPlusCircle size={40} color="white"></FaPlusCircle>
+                                    </Link>
+                                </span>
+                            </div>
+                        </li>
+                        )
+                    }         
+                    {
+                        console.info('getPaginatedIt: ', getPaginatedItems(categories, 1, 5))
+                    }                 
                 </ul>
             </main>
             <footer>
