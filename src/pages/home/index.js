@@ -1,9 +1,11 @@
 import React, {useEffect, useState} from 'react';
 import {FaSearch, FaPlusCircle, FaFacebookF} from 'react-icons/fa'
+
 import './styles.css'
+import Footer from '../footer/index.js'
+
 import { Link } from 'react-router-dom';
 import { showData, getCategories, getCountry, getPaginatedItems } from '../../services/api.js'
-
 
 export default function Home() { 
 
@@ -11,7 +13,7 @@ export default function Home() {
 
     useEffect(() => {     
         setCategories(getCategories);
-    }, []);;
+    }, []);
     
     return(
         <div className="home-container">
@@ -37,10 +39,10 @@ export default function Home() {
                     {categories.map(item =>             
                         <li>    
                             <div>
-                            <strong>{item.name}</strong>
+                            <strong>{item.category}</strong>
                                 <p>strong, good, and beauty</p>
                                 <span>
-                                    <Link to="">
+                                    <Link to="/items">
                                         <FaPlusCircle size={40} color="white"></FaPlusCircle>
                                     </Link>
                                 </span>
@@ -48,18 +50,11 @@ export default function Home() {
                         </li>
                         )
                     }         
-                    {
-                        console.info('getPaginatedIt: ', getPaginatedItems(categories, 1, 5))
-                    }                 
                 </ul>
             </main>
-            <footer>
-                <strong>BeerS social medias</strong>
-                <span><FaFacebookF size="18px" color="blue"></FaFacebookF></span>
-                <p>Use of this website is subject to the terms and conditions 
-                    of the Terms of Use and Privacy Policy.</p>
-                <b>© BeerS. Todos os direitos reservados.</b>
-            </footer>
+            <Footer></Footer>
         </div>
     );
 }
+
+ 

@@ -1,0 +1,56 @@
+.nav-bar-container {
+    position: fixed;
+    top: 0;
+    width: 100%;
+}
+
+.nav-bar-container nav{
+    padding: 15px;
+    background: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.nav-bar-container strong {
+    text-align: center;
+    font-size: 30px;
+    color: #605D5D;
+    opacity: 0.77;
+}
+.nav-bar-container button {
+    border: none;
+    background: none;
+}
+
+.nav-bar-container input {
+    border-radius: 20px;
+    width: 0;
+    height: 0;
+    background-color: white;
+    border: black 1px solid;
+    position: relative;
+    left: 5px;
+}
+
+/*button click*/
+
+.nav-bar-container main {
+    visibility: hidden;
+}
+.nav-bar-container .main{
+    visibility: visible;
+    height: 100%;
+    width: 100%;
+    position: fixed;
+    background-color: #f0f0f5;
+}
+
+.nav-bar-container .main ul li {
+    margin-left: 10%;
+    margin-top: 20px;
+    border-bottom: rgba(0,0,0,0.5) 2px solid;
+    width: 80%;
+    font-size: 20px;
+}
+

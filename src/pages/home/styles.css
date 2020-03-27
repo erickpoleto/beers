@@ -1,6 +1,5 @@
 .home-container {
     width: 100%;
-    max-width: 380px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -73,13 +72,12 @@
 /*main*/
 
 .home-container main {
-    background-color: #F2F2F2;
     display: flex;
     flex-direction: column;
 }
 
 .home-container main h2 {
-    font-size: 35px;
+    font-size: 29px;
     text-align: center;
     margin-top: 10px;   
 }
@@ -98,7 +96,7 @@
     background-size: cover;
     margin-top: 50px;
     width: 85%;
-    height: 290px;
+    height: 330px;
 }
 
 .home-container main ul li div {
@@ -106,13 +104,13 @@
     background-color: rgba(0, 0, 0, 0.8);
     color: #F2F2F2;
     padding: 10px 0 0 10px;
-    height: 49%;
+    height: 55%;
     display: flex;
     flex-direction: column;
 }
 
 .home-container main ul li div strong {
-    font-size: 35px;
+    font-size: 29px;
 }
 
 .home-container main ul li div p {
@@ -125,28 +123,5 @@
 .home-container main ul li div span {
     text-align: end;
     margin-right: 10px;
+    margin-top: 10px;
 }
-/*footer*/
- .home-container footer {
-    margin-top: 40px; 
-    background-color: rgba(0, 0, 0, 0.59);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    font-size: 15px;
- }
- .home-container footer strong {
-    margin-top: 5px;
-    color: azure;
-    margin-bottom: 10px;
- }
- .home-container footer span {
-    margin-bottom: 10px;
- }
-
- .home-container footer p {
-    text-align: center;
-    margin-bottom: 10px;
-
- }
