@@ -32,6 +32,7 @@ export default function Items() {
             <NavBar></NavBar>
             <div className="item-container">
                 <header>
+                    
                     <h1>{localStorage.getItem('@category-name')}</h1>
                     <p>Pale ale is a top-fermented beer made with predominantly pale malt. 
                         The highest proportion of pale malts results in a lighter colour. 

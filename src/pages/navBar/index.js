@@ -1,10 +1,12 @@
-import React from 'react';
+import React, {useState, Component, Fragment} from 'react';
 import {FaBars, FaSearch} from 'react-icons/fa'
 import { Link } from 'react-router-dom';
 
 import './styles.css';
 
-export default function NavBar() {
+export default function NavBar(props) {
+
+    const [filter, setFilter] = useState([]);
 
     const showHiddenBar = () => {
         const main = document.querySelector("main");

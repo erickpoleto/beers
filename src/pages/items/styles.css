@@ -39,17 +39,16 @@
     margin: 50px 0;
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    grid-row-gap: 10px;
     text-align: center;
+    grid-column-gap: 6px;
 }
 
 .item-container main ul li {
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-top: 20px;
     background: white;
-    margin: 10px 10px;
+    margin: 10px 0;
     padding: 10px 0;
     /*box-shadow: 0 5px 10px;*/
 }

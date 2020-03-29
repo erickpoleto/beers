@@ -23,7 +23,6 @@ export default function About() {
             <div className="about-container">
 
                 <header>
-                    <Link to='/items'>back</Link>
                     <h1>{localStorage.getItem('@name-beer')}</h1>
                 </header>
                 <main>

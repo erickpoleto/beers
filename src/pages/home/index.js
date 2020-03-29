@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {FaSearch, FaPlusCircle, FaFacebookF} from 'react-icons/fa'
+import {FaSearch, FaPlusCircle, FaFacebookF, FaUser} from 'react-icons/fa'
 
 import './styles.css'
 import Footer from '../footer/index.js'
@@ -26,6 +26,12 @@ export default function Home() {
         <div className="home-container">
             <header>
                 <div>
+                    <span>
+                        <Link to="/login" style={{textDecoration:'none'}}>
+                        <strong>login</strong>
+                        <FaUser size={30} color='white'></FaUser>
+                        </Link>
+                    </span>
                     <h1>BeerS</h1>
                     <strong>Find any beer you want</strong>
                     <form>
