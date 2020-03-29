@@ -7,6 +7,7 @@ import Footer from '../footer/index.js'
 import { Link } from 'react-router-dom';
 import { showData, getCategories, getCountry, getPaginatedItems } from '../../services/api.js'
 
+
 export default function Home() { 
 
     const [categories, setCategories] = useState([]);
@@ -15,6 +16,12 @@ export default function Home() {
         setCategories(getCategories);
     }, []);
     
+    const getOnClickCategory = (event) => {
+        const targ = event.target.parentNode;
+        localStorage.setItem("@category-name", targ.classList);
+        console.log(localStorage.getItem('@category-name'));
+    };
+
     return(
         <div className="home-container">
             <header>
@@ -39,10 +46,10 @@ export default function Home() {
                     {categories.map(item =>             
                         <li>    
                             <div>
-                            <strong>{item.category}</strong>
+                                <strong>{item.category}</strong>
                                 <p>strong, good, and beauty</p>
-                                <span>
-                                    <Link to="/items">
+                                <span className={item.category}>
+                                    <Link className={item.category} onClick={getOnClickCategory} to='/items'>
                                         <FaPlusCircle size={40} color="white"></FaPlusCircle>
                                     </Link>
                                 </span>

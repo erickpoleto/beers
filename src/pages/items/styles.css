@@ -60,10 +60,11 @@
 }
 
 .item-container main ul li h2{
-    font-size: 25px;
+    font-size: 20px;
 }
 .item-container main ul li strong{
-    font-size: 17px
+    font-size: 17px;
+    color: grey;    
 }
 .item-container main ul li span{
     margin-top: 10px;
@@ -74,7 +75,7 @@
     height: 50px;
     margin-top: 6px;
     border: none;
-    background-color: #679ed2;
+    background-color: #4481c5;
     
 }
 

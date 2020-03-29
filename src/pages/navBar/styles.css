@@ -23,20 +23,11 @@
     background: none;
 }
 
-.nav-bar-container input {
-    border-radius: 20px;
-    width: 0;
-    height: 0;
-    background-color: white;
-    border: black 1px solid;
-    position: relative;
-    left: 5px;
-}
-
 /*button click*/
 
 .nav-bar-container main {
     visibility: hidden;
+    transition: all 1s;
 }
 .nav-bar-container .main{
     visibility: visible;
@@ -44,6 +35,8 @@
     width: 100%;
     position: fixed;
     background-color: #f0f0f5;
+    
+    transition: all 1s;
 }
 
 .nav-bar-container .main ul li {
@@ -52,5 +45,7 @@
     border-bottom: rgba(0,0,0,0.5) 2px solid;
     width: 80%;
     font-size: 20px;
+    
+    transition: all 0.2s;
 }
 

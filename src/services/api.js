@@ -2,19 +2,15 @@ import data from '../data/db.json';
 
 import * as _ from "lodash";
 
+const db = require('../data/db.json');
+
 export const showData = (index) => {
   console.info(data)
   return data[0];
 };
 
-//pagination country
+//functions
 
-export const getCountry = (index) => {
-
-  return _.groupBy(data, "country");
-};
-
-//pagination
 export const getPaginatedItems = (items, page, pageSize) => {
   console.info('items: ', items);
   var pg = page || 1,
@@ -31,12 +27,46 @@ export const getPaginatedItems = (items, page, pageSize) => {
   };
 }
 
+
+export const getNameFromCategory = (category) => {
+  const list = []
+  db.forEach(element => {
+    if(element.category == undefined) {
+      element.category = 'without category';
+      console.info('category: ', element.category)
+    }
+    if(element.category == category) {
+      list.push({name: element.name, ibu: element.ibu, country: element.country});
+    }
+  });
+  return list;
+}
+
+export const getInfoFromName = (name) => {
+  const list = []
+  db.forEach(element => {
+    if(element.name == name) {
+      list.push({
+        ibu: element.ibu, 
+        country: element.country,
+        category: element.category,
+        city: element.city,
+        site: element.site,
+        description: element.description,
+
+      });
+    }
+  });
+  return list;
+}
+
 export const getCategories = () => {
   return _.map(_.groupBy(data, "category"), (o, idx) => {
+    if(o[0].category === undefined){
+      o[0].category = 'without category';
+    }
     return {
       category: o[0].category,
     }
   });
 };
-
-
