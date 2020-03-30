@@ -1,11 +1,51 @@
-import React from 'react';
-import {Link} from 'react-router-dom';
+import React ,{useState}from 'react';
+import {Link, useHistory} from 'react-router-dom';
 
+import api from '../../services/api';
 import './styles.css'
 
 import Footer from '../footer';
 
 export default function Register (){
+
+    const [username, setUserName] = useState("");
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [confirmPassword, setConfirmPassword] = useState("");
+
+    const history = useHistory();
+
+    async function handleRegister(e) {
+        e.preventDefault();
+        if(/\s/g.test(username)){
+            alert("username cant have white spaces")
+            return;
+        }
+        else if(confirmPassword !== password){
+            alert("passwords are different")
+            return;
+        }
+        else if(/\s/g.test(password)){
+            alert("password cant have white spaces")
+            return;
+        }
+        else{
+            const data = {
+                username,
+                email,
+                password
+            }
+            try{
+                const response = await api.post('register', data);
+                alert('success');
+                history.push('/');
+            }catch(e){
+                alert("name or email already in use")
+            }
+        }
+
+    }
+
     return(
         <div className="register-container">
             <header>
@@ -15,11 +55,11 @@ export default function Register (){
                 <h1>Register</h1>
                 <h2>Welcome to beers, lets get you as a member</h2>
                 <div>
-                    <form>
-                        <input type="text" placeholder="Username"></input>
-                        <input type="email" placeholder="email"></input>
-                        <input type="password" placeholder="password"></input>
-                        <input type="password" placeholder="confirmPassword"></input>
+                    <form onSubmit={handleRegister}>
+                        <input value={username} onChange={e=>setUserName(e.target.value)} type="text" placeholder="username" required></input>
+                        <input value={email} onChange={e=>setEmail(e.target.value)} type="email" placeholder="email" required></input>
+                        <input value={password} onChange={e=>setPassword(e.target.value)} type="password" placeholder="password" required></input>
+                        <input value={confirmPassword} onChange={e=>setConfirmPassword(e.target.value)} type="password" placeholder="confirm password" required></input>
                         <button>Register</button>
                     </form>
                     <p>Already have an acount?<Link to="/login">Login</Link></p>

@@ -5,12 +5,23 @@ import './styles.css'
 import Footer from '../footer/index.js'
 
 import { Link } from 'react-router-dom';
-import { showData, getCategories, getCountry, getPaginatedItems } from '../../services/api.js'
+import { showData, getCategories, getCountry, getPaginatedItems } from '../../services/functionsJson.js'
+import Login from '../login';
 
 
 export default function Home() { 
 
+    let route = " ";
     const [categories, setCategories] = useState([]);
+    let username = localStorage.getItem('@local_username')
+    
+    if (username.length > 0){
+        route = "/"
+    }else {
+        route = "/login"
+    }
+    const verify = () =>{
+    }
 
     useEffect(() => {     
         setCategories(getCategories);
@@ -27,8 +38,8 @@ export default function Home() {
             <header>
                 <div>
                     <span>
-                        <Link to="/login" style={{textDecoration:'none'}}>
-                        <strong>login</strong>
+                        <Link to={route} style={{textDecoration:'none'}}>
+                        <strong>{username}</strong>
                         <FaUser size={30} color='white'></FaUser>
                         </Link>
                     </span>

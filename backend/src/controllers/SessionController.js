@@ -2,16 +2,16 @@ const connection = require('../database/index')
 
 module.exports = {
     async create(req, resp) {
-        const { name, password } = req.body;
-
+        const { username, password } = req.body;
         const user = await connection('users')
-            .where({'name': name, 'password': password})
-            .select('name')
+            .where('username',username)
+            .andWhere('password', password)
+            .select('username')
             .first();
         if(!user) {
-            return resp.status(400).json({ error: "no ong found with this id"});
+            return resp.status(400).json({ error: "name or password are wrong"});
         }
 
-        return resp.json(`hello ${user.name}`);
+        return resp.json(`hello ${user.username}`);
     }
 }

@@ -7,7 +7,7 @@ import Footer from '../footer/index.js';
 
 import { Link } from 'react-router-dom';
 
-import { getCategories, getName, getNameFromCategory } from '../../services/api.js';
+import { getCategories, getName, getNameFromCategory } from '../../services/functionsJson';
 
 
 import BottleBeer from '../../staticImgs/bottleBeer.png'

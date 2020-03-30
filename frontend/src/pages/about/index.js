@@ -5,7 +5,7 @@ import './styles.css';
 import Footer from '../footer';
 import NavBar from '../navBar';
 
-import { getInfoFromName } from '../../services/api.js';
+import { getInfoFromName } from '../../services/functionsJson.js';
 
 import BottleBeer from '../../staticImgs/bottleBeer.png';
 
