@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import {FaStar} from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 
 import './styles.css';
@@ -33,9 +32,7 @@ export default function About() {
                         return(
                             <div>
                                 <span>
-                                    <FaStar size={30} color="black"></FaStar>
-                                    <FaStar size={30} color="black"></FaStar>
-                                    <FaStar size={30} color="black"></FaStar>
+                                    
                                 </span>
                                 <div>
                                     <strong>{item.category}</strong>
