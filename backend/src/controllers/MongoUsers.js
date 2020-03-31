@@ -9,15 +9,12 @@ module.exports = {
         
     },
     async create(req, res) {
+         
         try{
-            await User.create({
-                username:"erick",
-                email:"erick-poelto",
-                password:"150"
-            });
-            return res.json('done');
+            const user = await User.create(req.body);
+            return res.json(user);
         }catch(e){
-            return res.status(400).json("error")
+            return res.status(400).json("username or email already exists")
         }
     },
     async delete(req, res) {

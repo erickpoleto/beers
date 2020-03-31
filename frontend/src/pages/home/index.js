@@ -5,7 +5,7 @@ import './styles.css'
 import Footer from '../footer/index.js'
 
 import { Link } from 'react-router-dom';
-import { showData, getCategories, getCountry, getPaginatedItems } from '../../services/functionsJson.js'
+import { getCategories} from '../../services/functionsJson.js'
 import Login from '../login';
 
 
@@ -13,15 +13,13 @@ export default function Home() {
 
     let route = " ";
     const [categories, setCategories] = useState([]);
-    let username = localStorage.getItem('@local_username')
-    
-    if (username.length > 0){
-        route = "/"
-    }else {
-        route = "/login"
+    let username = sessionStorage.getItem('@local_username')
+    if(username == null){
+        route = '/login'
+    }else{
+        route = '/'
     }
-    const verify = () =>{
-    }
+
 
     useEffect(() => {     
         setCategories(getCategories);
@@ -29,10 +27,8 @@ export default function Home() {
     
     const getOnClickCategory = (event) => {
         const targ = event.target.parentNode;
-        localStorage.setItem("@category-name", targ.classList);
-        console.log(localStorage.getItem('@category-name'));
+        sessionStorage.setItem("@category-name", targ.classList);
     };
-
     return(
         <div className="home-container">
             <header>

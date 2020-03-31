@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-
 import './styles.css';
 import Footer from '../footer';
 import NavBar from '../navBar';
+import api from '../../services/api'
 
 import { getInfoFromName } from '../../services/functionsJson.js';
 
@@ -11,10 +11,24 @@ import BottleBeer from '../../staticImgs/bottleBeer.png';
 
 export default function About() {
 
-    const [name, setName] = useState([]);
+    const [beer, setBeer] = useState([]);
+    const name = sessionStorage.getItem('@name-beer')
 
     useEffect(() => {
-        setName(getInfoFromName(localStorage.getItem('@name-beer')));
+        async function getName(){
+            const data = {
+                name
+            }
+            try{
+                const response = await api.post('/beersabout', data)
+                console.info(response.data)
+                setBeer(response.data)
+
+            }catch(e){
+                alert("something went wrong")
+            }
+        }
+        getName();
     }, []);
 
     return(
@@ -22,14 +36,14 @@ export default function About() {
             <div className="about-container">
 
                 <header>
-                    <h1>{localStorage.getItem('@name-beer')}</h1>
+                    <h1>{sessionStorage.getItem('@name-beer')}</h1>
                 </header>
                 <main>
                     <div className="about">
                         <div className="about-main-div">
                             <img src={BottleBeer}></img>
                         </div>
-                        {name.map( item => {
+                        {beer.map( item => {
                             return(
                                 <div>
                                     <span>

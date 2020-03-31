@@ -20,15 +20,15 @@ export default function Login (){
         }
         try{
             
-            const response = await api.post("session", data)
-            
-            localStorage.setItem('@local_username', username);
+            const response = await api.post("sessionpost", data);
+            console.info(response)
+            sessionStorage.setItem('@local_username', username);
             alert('success')
             history.push('/');
         }catch(err){
             alert("username or password invalids");
             console.info(data)
-            console.info(api.post("session", data))
+            console.info(api.post("sessionpost", data))
         }
     }
 

@@ -36,9 +36,9 @@ export default function Register (){
                 password
             }
             try{
-                const response = await api.post('register', data);
+                const response = await api.post('post', data);
                 alert('success');
-                history.push('/');
+                history.push('/login');
             }catch(e){
                 alert("name or email already in use")
             }

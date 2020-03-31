@@ -4,6 +4,9 @@ import { FaPlusCircle, FaStar, FaAtom, FaMapMarkedAlt} from 'react-icons/fa'
 import './styles.css';
 import NavBar from '../navBar/index.js';
 import Footer from '../footer/index.js';
+import api from '../../services/api';
+
+import { Waypoint } from 'react-waypoint';
 
 import { Link } from 'react-router-dom';
 
@@ -14,17 +17,37 @@ import BottleBeer from '../../staticImgs/bottleBeer.png'
 
 export default function Items() {
     
-    const [name, setName] = useState([]);
+    const [beer, setBeers] = useState([])
+    const category = sessionStorage.getItem('@category-name')
+    //paginação
+    const [page, setPage] = useState(1);
+    const [loading, setLoading] = useState(false)
 
-    useEffect(() => {     
-        setName(getNameFromCategory(localStorage.getItem('@category-name')));
-        console.log(localStorage.getItem('@category-name'));
+    async function loadItems(){
+        
+        //document.querySelector(window).height();
+        if(loading) {
+            return;
+        }
+        try{ 
+            setLoading(true);
+            const response = await api.post(`/beersitems?page=${page}`,{category: category})
+            setBeers([...beer, ...response.data]);
+            setPage(page + 1);
+            setLoading(false);
+            console.info(category);
+        }catch(e) {
+            alert("not found");
+        }
+    } 
+    useEffect(() =>{
+        //async func to get all beers
+        loadItems();
     }, []);
 
     const getOnClickName = (event) => {
         const targ = event.target;
-        localStorage.setItem("@name-beer", targ.classList);
-        console.info(localStorage.getItem('@name-beer'));
+        sessionStorage.setItem("@name-beer", targ.classList);
     }
 
     return(
@@ -33,7 +56,7 @@ export default function Items() {
             <div className="item-container">
                 <header>
                     
-                    <h1>{localStorage.getItem('@category-name')}</h1>
+                    <h1>{sessionStorage.getItem('@category-name')}</h1>
                     <p>Pale ale is a top-fermented beer made with predominantly pale malt. 
                         The highest proportion of pale malts results in a lighter colour. 
                         The term first appeared around 1703 for 
@@ -46,7 +69,7 @@ export default function Items() {
                 </header>
                 <main>
                     <ul>
-                        {name.map( item => {
+                        {beer.map( item => {
                             return(
                                 <li>
                                     <h2>{item.name}</h2>
@@ -72,6 +95,7 @@ export default function Items() {
                             })
                         }
                     </ul>
+                    <Waypoint onEnter={loadItems}></Waypoint>
                 </main>
                 <Footer></Footer>
             </div>

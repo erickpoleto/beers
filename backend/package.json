@@ -12,6 +12,7 @@
     "mongo": "^0.1.0",
     "mongodb": "^3.5.5",
     "mongoose": "^5.9.6",
+    "nodemailer": "^6.4.6",
     "nodemon": "^2.0.2",
     "react": "^16.13.1",
     "react-icons": "^3.9.0",
@@ -24,7 +25,8 @@
   "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon src/index.js"
+    "start": "nodemon src/index.js",
+    "sync" : "node scripts/sync.js"
   },
   "author": "",
   "license": "ISC"
