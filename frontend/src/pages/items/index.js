@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import { FaPlusCircle, FaStar} from 'react-icons/fa'
+import { FaPlusCircle, FaStar, FaAtom, FaMapMarkedAlt} from 'react-icons/fa'
 
 import './styles.css';
 import NavBar from '../navBar/index.js';
@@ -50,8 +50,14 @@ export default function Items() {
                             return(
                                 <li>
                                     <h2>{item.name}</h2>
-                                    <strong>{item.ibu}</strong>
-                                    <strong>{item.country}</strong>
+                                    <span>
+                                        <FaAtom size={25}></FaAtom>
+                                        <strong>{item.ibu}</strong>
+                                    </span>
+                                    <span>
+                                        <FaMapMarkedAlt size={25}></FaMapMarkedAlt>
+                                        <strong>{item.country}</strong>
+                                    </span>
                                     <img src={BottleBeer}/>
                                     <span>
                                         <FaStar size={30} color='black'></FaStar>

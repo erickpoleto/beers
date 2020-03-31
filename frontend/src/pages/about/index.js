@@ -25,33 +25,39 @@ export default function About() {
                     <h1>{localStorage.getItem('@name-beer')}</h1>
                 </header>
                 <main>
-                    <div className="about-main-div">
-                        <img src={BottleBeer}></img>
-                    </div>
-                    {name.map( item => {
-                        return(
-                            <div>
-                                <span>
-                                    
-                                </span>
+                    <div className="about">
+                        <div className="about-main-div">
+                            <img src={BottleBeer}></img>
+                        </div>
+                        {name.map( item => {
+                            return(
                                 <div>
-                                    <strong>{item.category}</strong>
-                                    <strong>{item.country}</strong>
-                                    <strong>{item.city}</strong>
-                                    <strong>{item.ibu}</strong>
-                                    <strong><a href="/">{item.site}</a></strong>
-                                    <p>
-                                        {item.description}
-                                    </p>
+                                    <span>
+                                        
+                                    </span>
+                                    <div>
+                                        <strong>{item.category}</strong>
+                                        <strong>{item.country}</strong>
+                                        <strong>{item.city}</strong>
+                                        <strong>{item.ibu}</strong>
+                                        <strong><a href="/">{item.site}</a></strong>
+                                        <p>
+                                            {item.description}
+                                        </p>
+                                    </div>
                                     <i></i>
+                                    
                                 </div>
-                            </div>
-                            );
-                        })
-                    }
+                                );
+                            })
+                            
+                        }
+                    </div>
                 </main>
                 <Footer></Footer>
             </div>
         </div>
     );
 }
+
+/*refazer*/

@@ -13,6 +13,7 @@
     background-size: cover;
     height: 600px;
     text-align: center;
+    width: 100%;
     
 }
 
@@ -60,16 +61,7 @@
     background: none;
 }
 
-.home-container div form select {
-    margin-top: 30px;
-    border-radius: 10px;
-    font-size: 15px;
-}
 
-.home-container div form select option {
-    text-align: center;
-
-}
 
 .home-container button {
     border: none;
@@ -131,4 +123,44 @@
     text-align: end;
     margin-right: 10px;
     margin-top: 20px;
+}
+@media (min-width: 500px) {
+    .home-container header{
+        width: 100%;
+        height: 70%;
+    }
+    .home-container header div {
+        width: 100%;
+        height: 100%;
+        padding: 10% 0;
+        margin: 0 0;
+    }
+    .home-container header div span strong {
+        font-size: 2rem;
+        margin-right: 10px;
+    }
+
+    .home-container header div h1 {
+        font-size: 10rem;
+    }
+    .home-container header div strong {
+        font-size: 3rem;
+        margin-top: 40px;
+    }
+    .home-container header form{
+        margin-top: 100px;
+    }
+    .home-container header form input {
+        width: 50%;
+    }
+    .home-container main h2 {
+        font-size: 2rem;
+        margin-top: 40px;
+    }
+    .home-container main ul {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        column-gap: 20px;
+    }
+    
 }

@@ -46,14 +46,10 @@ export default function Home() {
                     <h1>BeerS</h1>
                     <strong>Find any beer you want</strong>
                     <form>
-                        <input type='text' placeholder="Search">        
-                        </input>
+                        <input type='text' placeholder="Search"></input>
                         <button type="submit">
                             <FaSearch size={20} color="#000"></FaSearch>
                         </button>
-                        <select>
-                            <option value="style">Style</option>
-                        </select>
                     </form>
                 </div>
             </header>

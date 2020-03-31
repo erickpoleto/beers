@@ -57,3 +57,7 @@
 .about-container div + div p {
     margin-top: 20px;
 }
+
+@media (min-width: 500px) {
+  
+}
