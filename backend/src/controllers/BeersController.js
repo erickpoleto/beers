@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const Beer = require('../models/beers')
+const Beer = require('../models/BeersModel')
 
 module.exports = {
     async indexCategory(req, res) {
@@ -14,9 +14,5 @@ module.exports = {
         const {name} = req.body
         const beers = await Beer.find({name : name});
         return res.json(beers)
-    },
-    async update(req, res){
-       
     }
-
 }

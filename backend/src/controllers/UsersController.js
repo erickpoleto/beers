@@ -1,6 +1,6 @@
 const mongoose = require("mongoose")
 
-const User = require("../models/users");
+const User = require("../models/UsersModel");
 
 module.exports = {
     async index(req, res) {
@@ -18,7 +18,7 @@ module.exports = {
         }
     },
     async delete(req, res) {
-        await User.deleteMany({name: "erick"});
+        await User.deleteMany({username: /a/});
         return res.json("done");
     }
 };

@@ -20,7 +20,7 @@ export default function About() {
                 name
             }
             try{
-                const response = await api.post('/beersabout', data)
+                const response = await api.post('/beers/about', data)
                 console.info(response.data)
                 setBeer(response.data)
 

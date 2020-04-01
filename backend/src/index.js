@@ -13,7 +13,8 @@ app.use(express.json());
 mongoose.connect(
     "mongodb+srv://erickpoleto:12121285a7x@beers-dv82b.mongodb.net/beers?retryWrites=true&w=majority", 
     {useNewUrlParser: true, 
-    useCreateIndex: true
+    useCreateIndex: true,
+    useUnifiedTopology: true
     }
 );
 requireDir("./models")

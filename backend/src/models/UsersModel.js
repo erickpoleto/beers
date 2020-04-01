@@ -1,5 +1,17 @@
 const mongoose = require('mongoose');
 
+const RateBeer = new mongoose.Schema({
+    beerid: {
+        type:Number
+    },
+    rate: {
+        type: Number
+    },
+    voted: {
+        type: Boolean
+        }
+})
+
 const UserSchema = new mongoose.Schema({
     username: {
         type : String,
@@ -15,16 +27,11 @@ const UserSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    likedbeers: {
-        name: {
-            type: String
-        }
-    },
-    confirmed: {
+    emailconfirmed: {
         type:Boolean,
         default:false
-    }
-    ,
+    },
+    likedbeers: [ RateBeer ],
     createdAt: {
         type: Date,
         default: Date.now

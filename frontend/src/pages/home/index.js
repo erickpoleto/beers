@@ -4,7 +4,7 @@ import {FaSearch, FaPlusCircle, FaFacebookF, FaUser} from 'react-icons/fa'
 import './styles.css'
 import Footer from '../footer/index.js'
 
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { getCategories} from '../../services/functionsJson.js'
 import Login from '../login';
 
@@ -13,6 +13,9 @@ export default function Home() {
 
     let route = " ";
     const [categories, setCategories] = useState([]);
+    const [search, setSearch] = useState('')
+    const history = useHistory();
+    
     let username = sessionStorage.getItem('@local_username')
     if(username == null){
         route = '/login'
@@ -29,6 +32,12 @@ export default function Home() {
         const targ = event.target.parentNode;
         sessionStorage.setItem("@category-name", targ.classList);
     };
+    const getSearchValue = async (e) =>{
+        e.preventDefault();
+        const searchValue = document.querySelector('input');
+        await setSearch(searchValue.value);
+        
+    }
     return(
         <div className="home-container">
             <header>
@@ -43,9 +52,11 @@ export default function Home() {
                     <strong>Find any beer you want</strong>
                     <form>
                         <input type='text' placeholder="Search"></input>
-                        <button type="submit">
-                            <FaSearch size={20} color="#000"></FaSearch>
-                        </button>
+                        <Link onClick={getSearchValue}>
+                            <button type="submit">
+                                <FaSearch size={20} color="#000"></FaSearch>
+                            </button>
+                        </Link>
                     </form>
                 </div>
             </header>

@@ -1,5 +1,7 @@
 import React, {useEffect, useState} from 'react';
+
 import { FaPlusCircle, FaStar, FaAtom, FaMapMarkedAlt} from 'react-icons/fa'
+
 
 import './styles.css';
 import NavBar from '../navBar/index.js';
@@ -10,19 +12,18 @@ import { Waypoint } from 'react-waypoint';
 
 import { Link } from 'react-router-dom';
 
-import { getCategories, getName, getNameFromCategory } from '../../services/functionsJson';
-
 
 import BottleBeer from '../../staticImgs/bottleBeer.png'
 
 export default function Items() {
     
     const [beer, setBeers] = useState([])
-    const category = sessionStorage.getItem('@category-name')
+    let category = sessionStorage.getItem('@category-name')
     //paginação
     const [page, setPage] = useState(1);
     const [loading, setLoading] = useState(false)
-
+    //rating
+    const [rate, setRate] = useState(3);
     async function loadItems(){
         
         //document.querySelector(window).height();
@@ -31,7 +32,7 @@ export default function Items() {
         }
         try{ 
             setLoading(true);
-            const response = await api.post(`/beersitems?page=${page}`,{category: category})
+            const response = await api.post(`/beers/items?page=${page}`, {category:category})
             setBeers([...beer, ...response.data]);
             setPage(page + 1);
             setLoading(false);
@@ -82,11 +83,7 @@ export default function Items() {
                                         <strong>{item.country}</strong>
                                     </span>
                                     <img src={BottleBeer}/>
-                                    <span>
-                                        <FaStar size={30} color='black'></FaStar>
-                                        <FaStar size={30} color='black'></FaStar>
-                                        <FaStar size={30} color='black'></FaStar>
-                                    </span>
+                                    
                                     <button>
                                         <Link to='/about' onClick={getOnClickName} className={item.name} style={{textDecoration:'none', color: 'black'}}>More About</Link>
                                     </button>      
