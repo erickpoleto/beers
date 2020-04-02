@@ -19,8 +19,7 @@ export default function Login (){
             password
         }
         try{
-            
-            const response = await api.post("sessionpost", data);
+            const response = await api.post("session/verify", data);
             console.info(response)
             sessionStorage.setItem('@local_username', username);
             alert('success')
@@ -47,6 +46,7 @@ export default function Login (){
                         <button>Login</button>
                     </form>
                     <p>dont have an account? <Link to="/register">register</Link></p>
+                    <p>forgot your password? <Link to="/register">click here</Link></p>
                 </div>    
                 
             </main>
