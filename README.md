@@ -1,6 +1,6 @@
 #packages
 
-  #backend
+  ###backend
     npm install require-dir
     npm install nodemon
     npm install express
@@ -11,7 +11,7 @@
     npm install bycriptjs
     npm install jsonwebtoken
     
-  #frontend
+  ###frontend
     npm install create-react-app // npx create-react-app
     npm install react-icons
     npm install react-router-dom
