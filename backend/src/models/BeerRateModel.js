@@ -1,14 +1,20 @@
 const mongoose = require('mongoose');
-const mongoosePaginate = require("mongoose-paginate")
 
-const BeerVoteSchema = new mongoose.Schema({
-    id: {
-        type: Number
+const BeerRateSchema = new mongoose.Schema({
+    beer: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Beers',
+        require: true
+    },
+    user: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
+        require: true
     },
     rate: {
         type:Number
     }
 })
 
-module.exports = mongoose.model('BeerVote', BeerVoteSchema);
+module.exports = mongoose.model('BeerRate', BeerRateSchema);
 

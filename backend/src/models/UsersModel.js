@@ -1,42 +1,39 @@
 const mongoose = require('mongoose');
-
-const RateBeer = new mongoose.Schema({
-    beerid: {
-        type:Number
-    },
-    rate: {
-        type: Number
-    },
-    voted: {
-        type: Boolean
-        }
-})
+const bcrypt = require('bcryptjs');
 
 const UserSchema = new mongoose.Schema({
-    username: {
+    user: {
         type : String,
-        unique: true,
         required: true
     },
     email: {
         type: String,
         unique: true,
-        required: true
+        required: true,
+        lowercase: true
     },
     password: {
         type: String,
         required: true
     },
-    emailconfirmed: {
-        type:Boolean,
-        default:false
+    passwordResetToken: {
+        type: String,
+        select: false
     },
-    likedbeers: [ RateBeer ],
+    passwordResetExpires: {
+        type: String,
+        select: false
+    },
     createdAt: {
         type: Date,
         default: Date.now
     },
 });
 
+UserSchema.pre('save', async function(next){
+    const hash = await bcrypt.hash(this.password, 10);
+    this.password = hash;
+    next();
+})
 
 module.exports = mongoose.model('User', UserSchema);
