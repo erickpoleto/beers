@@ -7,7 +7,7 @@ import './styles.css'
 import Footer from '../footer';
 
 export default function Login (){
-    const[username, setUserName] = useState("");
+    const[email, setEmail] = useState("");
     const[password, setPassword] = useState("");
     
     const history = useHistory();
@@ -15,18 +15,15 @@ export default function Login (){
     async function handleLogin(e) {
         e.preventDefault();
         const data = {
-            username,
+            email,
             password
         }
         try{
             const response = await api.post("session/verify", data);
-            console.info(response)
-            sessionStorage.setItem('@local_username', username);
             alert('success')
             history.push('/');
         }catch(err){
             alert("username or password invalids");
-            console.info(data)
             console.info(api.post("sessionpost", data))
         }
     }
@@ -41,12 +38,12 @@ export default function Login (){
                 <h2>Welcome back, Login to your account</h2>
                 <div>
                     <form onSubmit={handleLogin}>
-                        <input value={username} onChange={e=> setUserName(e.target.value)} type="text" placeholder="Username" required></input>
+                        <input value={email} onChange={e=> setEmail(e.target.value)} type="text" placeholder="Email" required></input>
                         <input value={password} onChange={e=> setPassword(e.target.value)} type="password" placeholder="password" required></input>
                         <button>Login</button>
                     </form>
                     <p>dont have an account? <Link to="/register">register</Link></p>
-                    <p>forgot your password? <Link to="/register">click here</Link></p>
+                    <p>forgot your password? <Link to="/forgotpassword">click here</Link></p>
                 </div>    
                 
             </main>

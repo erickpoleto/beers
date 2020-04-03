@@ -8,20 +8,24 @@ import Footer from '../footer';
 
 export default function Register (){
 
-    const [username, setUserName] = useState("");
+    const [user, setUser] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
-
+    const number = 5;
     const history = useHistory();
 
     async function handleRegister(e) {
         e.preventDefault();
-        if(/\s/g.test(username)){
+        if(/\d/.test(user)){
             alert("username cant have white spaces")
             return;
         }
-        else if(confirmPassword !== password){
+        if(!/\s/g.test(user)){
+            alert('must have an surname')
+            return; 
+        }
+        if(confirmPassword !== password){
             alert("passwords are different")
             return;
         }
@@ -31,12 +35,12 @@ export default function Register (){
         }
         else{
             const data = {
-                username,
+                user,
                 email,
                 password
             }
             try{
-                const response = await api.post('post', data);
+                const response = await api.post('register', data);
                 alert('success');
                 history.push('/login');
             }catch(e){
@@ -56,7 +60,7 @@ export default function Register (){
                 <h2>Welcome to beers, lets get you as a member</h2>
                 <div>
                     <form onSubmit={handleRegister}>
-                        <input value={username} onChange={e=>setUserName(e.target.value)} type="text" placeholder="username" required></input>
+                        <input value={user} onChange={e=>setUser(e.target.value)} type="text" placeholder="username" required></input>
                         <input value={email} onChange={e=>setEmail(e.target.value)} type="email" placeholder="email" required></input>
                         <input value={password} onChange={e=>setPassword(e.target.value)} type="password" placeholder="password" required></input>
                         <input value={confirmPassword} onChange={e=>setConfirmPassword(e.target.value)} type="password" placeholder="confirm password" required></input>

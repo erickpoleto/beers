@@ -18,12 +18,11 @@ import BottleBeer from '../../staticImgs/bottleBeer.png'
 export default function Items() {
     
     const [beer, setBeers] = useState([])
-    let category = sessionStorage.getItem('@category-name')
+    const search = sessionStorage.getItem('@search')
     //paginação
     const [page, setPage] = useState(1);
     const [loading, setLoading] = useState(false)
-    //rating
-    const [rate, setRate] = useState(3);
+
     async function loadItems(){
         
         //document.querySelector(window).height();
@@ -32,12 +31,13 @@ export default function Items() {
         }
         try{ 
             setLoading(true);
-            const response = await api.post(`/beers/items?page=${page}`, {category:category})
+            const response = await api.post(`/items?page=${page}&search=${search}`)
             setBeers([...beer, ...response.data]);
             setPage(page + 1);
             setLoading(false);
-            console.info(category);
         }catch(e) {
+            console.info(search)
+            console.info(e)
             alert("not found");
         }
     } 
@@ -57,7 +57,7 @@ export default function Items() {
             <div className="item-container">
                 <header>
                     
-                    <h1>{sessionStorage.getItem('@category-name')}</h1>
+                    <h1>{sessionStorage.getItem('@search')}</h1>
                     <p>Pale ale is a top-fermented beer made with predominantly pale malt. 
                         The highest proportion of pale malts results in a lighter colour. 
                         The term first appeared around 1703 for 

@@ -6,6 +6,8 @@ import Items from './pages/items';
 import About from './pages/about';
 import Login from './pages/login';
 import Register from './pages/register';
+import ForgotPassword from './pages/forgotPassword';
+import ResetPassword from './pages/resetPassword';
 
 export default function Router() {
     return(
@@ -16,6 +18,8 @@ export default function Router() {
                 <Route path="/about" component={About}/>
                 <Route path="/login" component={Login}/>
                 <Route path="/register" component={Register}/>
+                <Route path="/forgotpassword" component={ForgotPassword}/>
+                <Route path="/resetPassword" component={ResetPassword}/>
             </Switch>
         </BrowserRouter>
     );

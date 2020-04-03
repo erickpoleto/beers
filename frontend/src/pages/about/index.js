@@ -20,10 +20,9 @@ export default function About() {
                 name
             }
             try{
-                const response = await api.post('/beers/about', data)
+                const response = await api.post('/about', data)
                 console.info(response.data)
                 setBeer(response.data)
-
             }catch(e){
                 alert("something went wrong")
             }
