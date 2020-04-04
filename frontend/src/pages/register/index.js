@@ -18,8 +18,12 @@ export default function Register (){
     async function handleRegister(e) {
         e.preventDefault();
         if(/\d/.test(user)){
-            alert("username cant have white spaces")
+            alert("username cant have numbers")
             return;
+        }
+        if(/[!@#$%^&*(),.?":{}|<>]/g.test(user)){
+            alert("username cant have special chars")
+            return
         }
         if(!/\s/g.test(user)){
             alert('must have an surname')
@@ -41,9 +45,10 @@ export default function Register (){
             }
             try{
                 const response = await api.post('register', data);
-                alert('success');
+                alert('email sent to your mail box, please confirm');
                 history.push('/login');
             }catch(e){
+                console.info(e)
                 alert("name or email already in use")
             }
         }
@@ -60,7 +65,7 @@ export default function Register (){
                 <h2>Welcome to beers, lets get you as a member</h2>
                 <div>
                     <form onSubmit={handleRegister}>
-                        <input value={user} onChange={e=>setUser(e.target.value)} type="text" placeholder="username" required></input>
+                        <input value={user} onChange={e=>setUser(e.target.value)} type="text" placeholder="Full name" required></input>
                         <input value={email} onChange={e=>setEmail(e.target.value)} type="email" placeholder="email" required></input>
                         <input value={password} onChange={e=>setPassword(e.target.value)} type="password" placeholder="password" required></input>
                         <input value={confirmPassword} onChange={e=>setConfirmPassword(e.target.value)} type="password" placeholder="confirm password" required></input>

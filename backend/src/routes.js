@@ -12,8 +12,9 @@ const routes = express.Router()
 
 //user
 routes.get('/', MongoUsers.index)
-routes.post('/post', MongoUsers.create);
-routes.delete('/delete', MongoUsers.delete);
+routes.post('/register', MongoUsers.create);
+routes.post('/resend', MongoUsers.reSend);
+routes.post('/confirm', MongoUsers.checkConfirmation);
 //session
 routes.post('/session/verify', MongoSession.create);
 routes.post('/session/forgotPassword', MongoSession.createForgotPassword);
@@ -21,8 +22,8 @@ routes.post('/session/resetPassword', MongoSession.resetPassword);
 //app
 routes.get('/token/test', MongoApp.index)
 //beers
-routes.post('/beers/items', MongoBeer.indexCategory);
-routes.post('/beers/about', MongoBeer.indexNameBeer);
+routes.post('/items', MongoBeer.indexSearch);
+routes.post('/about', MongoBeer.indexSearch);
 //beerRate
 routes.use(authMiddleware).post('/beers/rate', MongoBeerRate.create)
 routes.get('/beers/rate/all', MongoBeerRate.index)

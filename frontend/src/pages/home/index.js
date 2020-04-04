@@ -29,10 +29,9 @@ export default function Home() {
     
     
     const consult = async (e) => {
-        e.preventDefault()
         try{
-            sessionStorage.setItem('@search', search)
-            history.push('/items')
+            //sessionStorage.setItem('@search', search)
+            await history.push(`/items?${search}`)
         }catch(err){
             console.info(err)
             alert('something went wrong, try again')
@@ -66,11 +65,11 @@ export default function Home() {
                             <div>
                                 <strong>{item.category}</strong>
                                 <p>strong, good, and beauty</p>
-                                <span>
-                                    <button type="submit" onClick={e => setSearch(item.category)} onSubmit={consult} to='/items'>
+                                <form onSubmit={consult}> 
+                                    <button type="submit" onClick={async e=> await setSearch(item.category)}>
                                         <FaPlusCircle size={40} color="white"></FaPlusCircle>
-                                    </button>
-                                </span>
+                                    </button>    
+                                </form>
                             </div>
                         </li>
                         )

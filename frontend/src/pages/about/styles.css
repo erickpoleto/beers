@@ -8,9 +8,7 @@
     margin-right: 50px;
 
 }
-
-
-.about-container header h1 {
+.about-container main h1 {
     text-align: center;
 }
 .about-container header strong {
@@ -29,32 +27,25 @@
     border-radius: 5px 5px 0 0;
 }
 
-.about-main-div {
-    background: url('../../staticImgs/wheat-grass-seeds-textured-background_23-2148359074.jpg');
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: cover;
-}
 
-
-.about-container main .about-main-div img {
+.about-container main div img {
     height: 150px;
     width: 150px;
 }
 
-.about-container div + div strong {
+.about-container main div strong {
     display: flex;
     flex-direction: column;
     font-size: 18px;
     margin-top: 5px;
 }
 
-.about-container div + div strong a {
+.about-container main div strong a {
     text-decoration: none;
     color: blue;
 }
 
-.about-container div + div p {
+.about-container main div p {
     margin-top: 20px;
 }
 

@@ -17,7 +17,7 @@ transport.use('compile', hbs({
         extName: '.html',
         partialsDir: path.resolve('./src/resource'),
         layoutsDir: path.resolve('./src/resource'),
-        defaultLayout: '../resource/forgotPassword.html'
+        defaultLayout: false
     },
     viewPath: path.resolve('./src/resource'),
     extName: '.html'

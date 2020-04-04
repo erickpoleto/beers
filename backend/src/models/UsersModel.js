@@ -16,6 +16,13 @@ const UserSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    confirmed: {
+        type: Boolean,
+        default: false
+    },
+    confirmToken: {
+        type: String
+    },
     passwordResetToken: {
         type: String,
         select: false

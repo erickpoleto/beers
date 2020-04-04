@@ -10,7 +10,7 @@ import api from '../../services/api';
 
 import { Waypoint } from 'react-waypoint';
 
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 
 
 import BottleBeer from '../../staticImgs/bottleBeer.png'
@@ -18,11 +18,14 @@ import BottleBeer from '../../staticImgs/bottleBeer.png'
 export default function Items() {
     
     const [beer, setBeers] = useState([])
-    const search = sessionStorage.getItem('@search')
+    var search = window.location.search.substring(1).split('&');
     //paginação
     const [page, setPage] = useState(1);
+    const [total, setTotal] = useState(0);
     const [loading, setLoading] = useState(false)
-
+    
+    const history = useHistory();
+    
     async function loadItems(){
         
         //document.querySelector(window).height();
@@ -31,14 +34,18 @@ export default function Items() {
         }
         try{ 
             setLoading(true);
-            const response = await api.post(`/items?page=${page}&search=${search}`)
-            setBeers([...beer, ...response.data]);
+            const response = await api.post(`/items?search=${search[0]}&page=${page}`)
+            setBeers([...beer, ...response.data.docs]);
+            if(response.data.pages == 1){
+                return;
+            }
             setPage(page + 1);
             setLoading(false);
         }catch(e) {
-            console.info(search)
+            console.info(search[0])
             console.info(e)
             alert("not found");
+            history.push('/')
         }
     } 
     useEffect(() =>{
@@ -47,8 +54,11 @@ export default function Items() {
     }, []);
 
     const getOnClickName = (event) => {
-        const targ = event.target;
-        sessionStorage.setItem("@name-beer", targ.classList);
+        try{
+            event.preventDefault();
+            history.push(`/about?${event.target.className}`)
+        }catch{
+        }
     }
 
     return(
@@ -57,15 +67,15 @@ export default function Items() {
             <div className="item-container">
                 <header>
                     
-                    <h1>{sessionStorage.getItem('@search')}</h1>
+                    <h1>{search[0].replace('%20', " ")}</h1>
                     <p>Pale ale is a top-fermented beer made with predominantly pale malt. 
                         The highest proportion of pale malts results in a lighter colour. 
                         The term first appeared around 1703 for 
                         beers made from malts dried with high-carbon coke, which resulted in a lighter colour than other</p>
                     <strong>sort by</strong>
                     <ul>
-                        <li>name</li>
-                        <li>country</li>
+                        <li><button style={{border:'none', background:'none'}}>name</button></li>
+                        <li><button style={{border:'none', background:'none'}}>country</button></li>
                     </ul>
                 </header>
                 <main>
@@ -85,7 +95,7 @@ export default function Items() {
                                     <img src={BottleBeer}/>
                                     
                                     <button>
-                                        <Link to='/about' onClick={getOnClickName} className={item.name} style={{textDecoration:'none', color: 'black'}}>More About</Link>
+                                        <Link onClick={getOnClickName} className={item.name} style={{textDecoration:'none', color: 'black'}}>More About</Link>
                                     </button>      
                                 </li>
                                 )

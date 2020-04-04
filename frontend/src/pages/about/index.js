@@ -12,17 +12,13 @@ import BottleBeer from '../../staticImgs/bottleBeer.png';
 export default function About() {
 
     const [beer, setBeer] = useState([]);
-    const name = sessionStorage.getItem('@name-beer')
-
+    const name = window.location.search.substring(1).split('&');
     useEffect(() => {
         async function getName(){
-            const data = {
-                name
-            }
             try{
-                const response = await api.post('/about', data)
-                console.info(response.data)
-                setBeer(response.data)
+                const response = await api.post(`/about?search=${name[0]}`)
+                console.info(response.data.docs)
+                setBeer(response.data.docs)
             }catch(e){
                 alert("something went wrong")
             }
@@ -33,21 +29,12 @@ export default function About() {
     return(
         <div><NavBar></NavBar>
             <div className="about-container">
-
-                <header>
-                    <h1>{sessionStorage.getItem('@name-beer')}</h1>
-                </header>
                 <main>
-                    <div className="about">
-                        <div className="about-main-div">
-                            <img src={BottleBeer}></img>
-                        </div>
                         {beer.map( item => {
                             return(
                                 <div>
-                                    <span>
-                                        
-                                    </span>
+                                    <h1>{item.name}</h1>
+                                    <img src={BottleBeer}></img>
                                     <div>
                                         <strong>{item.category}</strong>
                                         <strong>{item.country}</strong>
@@ -65,7 +52,6 @@ export default function About() {
                             })
                             
                         }
-                    </div>
                 </main>
                 <Footer></Footer>
             </div>

@@ -119,11 +119,13 @@
     margin-top: 10px;
 }
 
-.home-container main ul li div span {
+.home-container main ul li div form{
     text-align: end;
     margin-right: 10px;
     margin-top: 20px;
 }
+
+
 @media (min-width: 500px) {
     .home-container header{
         width: 100%;

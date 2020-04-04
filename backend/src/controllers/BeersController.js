@@ -2,14 +2,20 @@ const mongoose = require("mongoose");
 const Beer = require('../models/BeersModel')
 
 module.exports = {
-    async indexCategory(req, res) {
-
-        const { page = 1 } = req.query
-        const {category} = req.body
-        const beers = await Beer.paginate({category : category}, { page:page, limit: 10});
-        return res.json(beers.docs);
+    async indexSearch(req, res) {
+        try{
+            const { page = 1, search } = req.query
+            const regex = new RegExp(search, "i")
+            const paginate = await Beer.paginate({$or:[{category:regex}, {name:regex}]}, { page:page, limit: 10});
+            if(paginate.docs.length === 0){
+                return res.status(400).send({error: "not found"})
+            }
+            return res.send(paginate);
+        }catch(err){
+            console.info(err);
+            return res.status(400).send({error: "something went wrong"});
+        }
     },
-
     async indexNameBeer(req, res){
         const {name} = req.body
         const beers = await Beer.find({name : name});

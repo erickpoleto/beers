@@ -13,6 +13,9 @@ module.exports = {
         if(!user){
             return res.status(400).send({error: "user not found"})
         }
+        if(user.confirmed == false) {
+            return res.status(400).send({error: "user not confirmed"})
+        }
         if(!await bcrypt.compare(password, user.password)){
             return res.status(400).send({error: "password invalid"})
         }
@@ -30,6 +33,9 @@ module.exports = {
             if(!user){
                 return res.status(400).send({error: "user not found"})
             }
+            if(user.confirmed) {
+
+            }
             const token = crypto.randomBytes(20).toString('hex');
             const now = new Date();
             now.setHours(now.getHours() + 1);
@@ -42,7 +48,7 @@ module.exports = {
                 to: email,
                 from: 'erick-poleto@hotmail.com',
                 template: '/forgotPassword',
-                context: {token}
+                context: {token, email}
             }, err => {
                 if(err){
                     console.info(err)
@@ -52,11 +58,12 @@ module.exports = {
             })
         }catch(err){
             console.info(err)
-            res.status(400).send({eeror: "error, try again"})
+            res.status(400).send({error: "error, try again"})
         }
     },
     async resetPassword(req, res) {
-        const {email, token, password} = req.body
+        const {token, email} = req.query;
+        const {password} = req.body;
         try{
             const user = await User.findOne({email})
             .select('+passwordResetToken passwordResetExpires');

@@ -8,7 +8,7 @@ export default function ResetPassword(){
 
     const [password, setPassword] = useState("")
     const [confirmPassword, setConfirmPassword] = useState("")
-    const [email, setEmail] = useState("")
+    const info = window.location.search.substring(1).split('&');
 
     const history = useHistory()
     const reset = async (e) => {
@@ -23,13 +23,11 @@ export default function ResetPassword(){
                 return;
             }
             const data = {
-                email,
                 password
             }
-            console.info(data)
-            const response = await api.post('session/resetPassword', data) 
+            const response = await api.post(`session/resetPassword?token=${info[0]}&email=${info[1]}`, data) 
             alert('password changed')
-            history.push('/')
+            history.push('/login')
         }catch(e){
             console.info(e);
             return alert('invalid email')
@@ -45,7 +43,6 @@ export default function ResetPassword(){
                     <h2>Enter new password</h2>
                     <div>
                         <form onSubmit={reset}>
-                            <input value={email} onChange={e=> setEmail(e.target.value)} type="text" placeholder="email" required></input>
                             <input value={password} onChange={e=> setPassword(e.target.value)} type="password" placeholder="new password" required></input>
                             <input value={confirmPassword} onChange={e=> setConfirmPassword(e.target.value)} type="password" placeholder="confirm password" required></input>
                             <button>Send</button>
