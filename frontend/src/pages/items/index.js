@@ -1,6 +1,8 @@
 import React, {useEffect, useState} from 'react';
 
 import { FaPlusCircle, FaStar, FaAtom, FaMapMarkedAlt} from 'react-icons/fa'
+import Rater from 'react-rater'
+import 'react-rater/lib/react-rater.css'
 
 
 import './styles.css';
@@ -18,6 +20,7 @@ import BottleBeer from '../../staticImgs/bottleBeer.png'
 export default function Items() {
     
     const [beer, setBeers] = useState([])
+    const [beerId, setBeerId] = useState(0)
     var search = window.location.search.substring(1).split('&');
     //paginação
     const [page, setPage] = useState(1);
@@ -60,7 +63,6 @@ export default function Items() {
         }catch{
         }
     }
-
     return(
         <div>
             <NavBar></NavBar>
@@ -93,7 +95,7 @@ export default function Items() {
                                         <strong>{item.country}</strong>
                                     </span>
                                     <img src={BottleBeer}/>
-                                    
+                                    <Rater rating={5} total={5} interactive={false}></Rater>
                                     <button>
                                         <Link onClick={getOnClickName} className={item.name} style={{textDecoration:'none', color: 'black'}}>More About</Link>
                                     </button>      

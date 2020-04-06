@@ -1,5 +1,7 @@
 import  React from 'react';
-import {BrowserRouter, Route, Switch } from 'react-router-dom';
+import { isAuthenticated } from './services/auth'
+
+import {BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
 
 import Home from './pages/home';
 import Items from './pages/items';
@@ -9,7 +11,20 @@ import Register from './pages/register';
 import ForgotPassword from './pages/forgotPassword';
 import ResetPassword from './pages/resetPassword';
 import ConfirmedEmail from './pages/emailConfirmed';
-import starRate from './pages/starRate/starRate';
+import Profile from './pages/profile';
+
+const PrivateRoute = ({ component: Component, ...rest }) => (
+    <Route
+      {...rest}
+      render={props =>
+        isAuthenticated() ? (
+          <Component {...props} />
+        ) : (
+          <Redirect to={{ pathname: "/", state: { from: props.location } }} />
+        )
+      }
+    />
+  );
 
 export default function Router() {
     return(
@@ -23,7 +38,7 @@ export default function Router() {
                 <Route path="/confirmed" component={ConfirmedEmail}/>
                 <Route path="/forgotpassword" component={ForgotPassword}/>
                 <Route path="/resetPassword" component={ResetPassword}/>
-                <Route path="/star" component={starRate}/>
+                <PrivateRoute path="/profile" component={Profile}/>
                 
             </Switch>
         </BrowserRouter>

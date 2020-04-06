@@ -12,16 +12,16 @@ import Login from '../login';
 
 export default function Home() { 
 
-    let route = " ";
+    
     const [categories, setCategories] = useState([]);
     const [search, setSearch] = useState('')
     const history = useHistory();
-    let username = sessionStorage.getItem('@local_username')
-
+    let username = sessionStorage.getItem('@user')
+    let route = " ";
     if(username == null){
         route = '/login'
     }else{
-        route = '/'
+        route = '/profile'
     }
     useEffect(() => {     
         setCategories(getCategories);

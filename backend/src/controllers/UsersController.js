@@ -42,36 +42,6 @@ module.exports = {
             return res.status(400).send({error: "registration failed"});
         }
     },
-    async reSend(req, res) {
-        const {email} = req.body;
-        try{
-            const user = await User.findOne({"email":email, "confirmed":false});
-            if(!user){
-                return res.status(400).send("email not found, or already confirmed")
-            }
-            const token = crypto.randomBytes(20).toString('hex');
-            await User.findByIdAndUpdate(user.id, {$set: {
-                confirmToken: token,
-            }})
-            //send
-            await mailer.sendMail({
-                to: email,
-                from: 'erick-poleto@hotmail.com',
-                template: '/confirmEmail',
-                context: {token, email}
-            }, err => {
-                if(err){
-                    console.info(err)
-                    return res.status(400).send({error: 'cannot send email'})
-                }
-                return res.send();
-            })
-            return res.send({user, token: Token.token({id: user.id})});
-        }catch(e){
-            console.info(e)
-            res.status(400).send({error: "try again"})
-        }
-    },
     async checkConfirmation(req, res) {
         const {token, email} = req.query;
         try{

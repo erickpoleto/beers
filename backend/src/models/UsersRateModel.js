@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const mongoosePaginate = require("mongoose-paginate")
 
 const UsersRateSchema = new mongoose.Schema({
     user: {
@@ -15,6 +16,9 @@ const UsersRateSchema = new mongoose.Schema({
         }
     ]
 })
+
+
+UsersRateSchema.plugin(mongoosePaginate);
 
 module.exports = mongoose.model('UsersRate', UsersRateSchema);
 

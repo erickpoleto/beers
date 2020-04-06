@@ -2,6 +2,8 @@ import React, {useState} from 'react';
 import {Link, useHistory} from 'react-router-dom';
 
 import api from '../../services/api';
+import {login, getToken} from '../../services/auth'
+
 import './styles.css'
 
 import Footer from '../footer';
@@ -20,11 +22,12 @@ export default function Login (){
         }
         try{
             const response = await api.post("session/verify", data);
+            login(response.data.token);
+            sessionStorage.setItem("@user", response.data.user.user)
             alert('success')
             history.push('/');
         }catch(err){
-            alert("username or password invalids");
-            console.info(api.post("sessionpost", data))
+            alert("username or password invalids or your email is not confirmed");
         }
     }
 

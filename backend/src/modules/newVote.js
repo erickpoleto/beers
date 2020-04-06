@@ -7,3 +7,4 @@ const update = async (beerRate, beer, rate, req ) => {
 }
 
 module.exports = update;
+

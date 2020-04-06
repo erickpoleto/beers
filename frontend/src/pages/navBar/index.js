@@ -7,7 +7,17 @@ import './styles.css';
 export default function NavBar(props) {
 
     const [filter, setFilter] = useState([]);
-
+    let username = sessionStorage.getItem('@user')
+    let direction = ""
+    let route = " ";
+    
+    if(username == null){
+        direction = "login"
+        route = '/login'
+    }else{
+        direction = "profile"
+        route = '/profile'
+    }
     const showHiddenBar = () => {
         const main = document.querySelector("main");
         main.classList.toggle('main');
@@ -28,8 +38,7 @@ export default function NavBar(props) {
             </nav>
             <main className="main:disabled">
                 <ul>
-                    <li><strong>Login</strong></li>
-                    <li><strong>Comunity</strong></li>
+                    <li><strong><Link style={{textDecoration:"none"}} to={route}>{direction}</Link></strong></li>
                     <li><strong>Contact Us</strong></li>
                 </ul>
             </main>

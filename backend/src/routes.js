@@ -15,7 +15,6 @@ const UsersRate = require('./models/UsersRateModel');
 //user
 routes.get('/', MongoUsers.index)
 routes.post('/register', MongoUsers.create);
-routes.post('/resend', MongoUsers.reSend);
 routes.post('/confirm', MongoUsers.checkConfirmation);
 //session
 routes.post('/session/verify', MongoSession.create);
@@ -27,13 +26,14 @@ routes.get('/token/test', MongoApp.index)
 routes.post('/items', MongoBeer.indexSearch);
 routes.post('/about', MongoBeer.indexSearch);
 //beerRate
+routes.post('/beer/rate/unique', MongoBeerRate.calculate);
 routes.use(authMiddleware).post('/beers/rate', MongoBeerRate.create)
 routes.get('/beers/rate/all', MongoBeerRate.index)
 routes.delete('/beers/rate/delete', MongoBeerRate.delete)
 
 routes.get('/testUsers', async(req, res) =>{
-    const UserRate = await UsersRate.find({}).populate(["user", "beer"])
-    return res.send({UserRate})
+    const UserRate = await UsersRate.find({user: req.userId}).populate(["user", "beer"]).populate({path: "beer", populate: {path:"beer"}})
+    return res.json({UserRate})
 })
 
 module.exports = (routes);

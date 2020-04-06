@@ -2,11 +2,15 @@ const mongoose = require('mongoose')
 const update = require('../modules/newVote')
 const BeerRate = require('../models/BeerRateModel')
 const UsersRate = require('../models/UsersRateModel')
-
+const Users = require('../models/UsersModel')
 module.exports = {
     async create(req, res){
         const {beer, rate} = req.body
         try{
+            const userVerify = Users.findOne({user: req.userId})
+            if(userVerify.confirmed == false){
+                return res.status(400).send({error: "user not confirmed"})
+            }
             if(await BeerRate.findOne({beer, user: req.userId})){
                 update(BeerRate, beer, rate, req);
                 return res.status(200).send();             
@@ -35,6 +39,11 @@ module.exports = {
     async index(req, res){
         const beerRate = await BeerRate.find().populate(['user', 'beer'])
         return res.json(beerRate)
+    },
+    async calculate(req, res){
+        const {beerId} = req.body
+        const beerRate = await BeerRate.find({beer: beerId});
+        return res.json(beerRate);
     },
     async delete(req, res) {
         const {beer} = req.body

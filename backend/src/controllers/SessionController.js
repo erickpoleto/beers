@@ -3,8 +3,10 @@ const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 const crypto = require('crypto');
 const User = require('../models/UsersModel')
+
 const tokens = require('../modules/token')
 const mailer = require('../modules/mailer')
+const reSend = require('../modules/reSendMail')
 
 module.exports = {
     async create(req, res) {
@@ -14,7 +16,8 @@ module.exports = {
             return res.status(400).send({error: "user not found"})
         }
         if(user.confirmed == false) {
-            return res.status(400).send({error: "user not confirmed"})
+            await reSend(res, User, email)
+            return res.status(400).send({error: "user not confirmed, email resent"})
         }
         if(!await bcrypt.compare(password, user.password)){
             return res.status(400).send({error: "password invalid"})
@@ -32,9 +35,6 @@ module.exports = {
             const user = await User.findOne({email})
             if(!user){
                 return res.status(400).send({error: "user not found"})
-            }
-            if(user.confirmed) {
-
             }
             const token = crypto.randomBytes(20).toString('hex');
             const now = new Date();
