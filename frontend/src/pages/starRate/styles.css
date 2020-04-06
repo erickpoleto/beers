@@ -1,0 +1,27 @@
+@import url(//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css);
+
+div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.react-rater {
+    font-size: 30px;
+}
+
+.react-rater-star {
+    color: #ccc;}
+    .react-rater-star.will-be-active {
+      color: #fc6; }
+    .react-rater-star.is-active {
+      color: #fc6; }
+    .react-rater-star.is-active-half:before {
+      color: #000;
+      content: '\2605';
+      position: absolute;
+      left: 0;
+      width: 50%;
+      overflow: hidden; }
+    .react-rater-star.is-disabled {
+      cursor: default; }
+  

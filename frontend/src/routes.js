@@ -9,6 +9,7 @@ import Register from './pages/register';
 import ForgotPassword from './pages/forgotPassword';
 import ResetPassword from './pages/resetPassword';
 import ConfirmedEmail from './pages/emailConfirmed';
+import starRate from './pages/starRate/starRate';
 
 export default function Router() {
     return(
@@ -22,6 +23,7 @@ export default function Router() {
                 <Route path="/confirmed" component={ConfirmedEmail}/>
                 <Route path="/forgotpassword" component={ForgotPassword}/>
                 <Route path="/resetPassword" component={ResetPassword}/>
+                <Route path="/star" component={starRate}/>
                 
             </Switch>
         </BrowserRouter>
