@@ -1,12 +1,15 @@
 import React, {useState, Component, Fragment} from 'react';
 import {FaBars, FaSearch} from 'react-icons/fa'
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 
+import {logout} from '../../services/auth'
 import './styles.css';
 
 export default function NavBar(props) {
 
     const [filter, setFilter] = useState([]);
+    const history = useHistory()
+    
     let username = sessionStorage.getItem('@user')
     let direction = ""
     let route = " ";
@@ -22,6 +25,13 @@ export default function NavBar(props) {
         const main = document.querySelector("main");
         main.classList.toggle('main');
         
+    }
+
+    const handleLogout = async (e) => {
+        e.preventDefault();
+        logout()
+        sessionStorage.removeItem('@user')
+        history.push('')
     }
 
     return (
@@ -41,6 +51,7 @@ export default function NavBar(props) {
                     <li><strong><Link style={{textDecoration:"none"}} to={route}>{direction}</Link></strong></li>
                     <li><strong>Contact Us</strong></li>
                 </ul>
+                <Link className="logout" onClick={handleLogout}>logout</Link>
             </main>
         </div>
     );

@@ -32,6 +32,9 @@ const BeerSchema = new mongoose.Schema({
     },
     website: {
         type: String
+    },
+    rate : {
+        type: Number
     }
 })
 BeerSchema.plugin(mongoosePaginate);

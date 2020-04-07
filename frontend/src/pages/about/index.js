@@ -1,6 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import './styles.css';
+
+import Rater from 'react-rater'
+import 'react-rater/lib/react-rater.css'
+
+
 import Footer from '../footer';
 import NavBar from '../navBar';
 import api from '../../services/api'
@@ -17,7 +22,6 @@ export default function About() {
         async function getName(){
             try{
                 const response = await api.post(`/about?search=${name[0]}`)
-                console.info(response.data.docs)
                 setBeer(response.data.docs)
             }catch(e){
                 alert("something went wrong")
@@ -25,6 +29,18 @@ export default function About() {
         }
         getName();
     }, []);
+
+    const rate = async (id,rate) => {
+        try{
+            const data = {
+                "beer": id.toString(),
+                "rate": rate
+            }
+            const response = await api.post('/rate', data)
+        }catch(e){
+            alert("only users can vote");
+        }
+    }
 
     return(
         <div><NavBar></NavBar>
@@ -41,6 +57,7 @@ export default function About() {
                                         <strong>{item.city}</strong>
                                         <strong>{item.ibu}</strong>
                                         <strong><a href="/">{item.site}</a></strong>
+                                        <Rater onRating={async (rating)=>{rate(item._id, rating.rating)}} rating={item.rate} total={5} interactive={true}></Rater>
                                         <p>
                                             {item.description}
                                         </p>

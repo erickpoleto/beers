@@ -12,7 +12,6 @@ const UsersRateSchema = new mongoose.Schema({
             type: mongoose.Schema.Types.ObjectId,
             ref: 'BeerRate',
             require: true
-        
         }
     ]
 })

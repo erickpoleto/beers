@@ -26,10 +26,9 @@ routes.get('/token/test', MongoApp.index)
 routes.post('/items', MongoBeer.indexSearch);
 routes.post('/about', MongoBeer.indexSearch);
 //beerRate
-routes.post('/beer/rate/unique', MongoBeerRate.calculate);
-routes.use(authMiddleware).post('/beers/rate', MongoBeerRate.create)
-routes.get('/beers/rate/all', MongoBeerRate.index)
-routes.delete('/beers/rate/delete', MongoBeerRate.delete)
+routes.use(authMiddleware).post('/rate', MongoBeerRate.create)
+routes.get('/rate/all', MongoBeerRate.index)
+routes.delete('/delete', MongoBeerRate.delete)
 
 routes.get('/testUsers', async(req, res) =>{
     const UserRate = await UsersRate.find({user: req.userId}).populate(["user", "beer"]).populate({path: "beer", populate: {path:"beer"}})

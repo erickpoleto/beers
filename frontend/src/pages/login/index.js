@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import {Link, useHistory} from 'react-router-dom';
 
 import api from '../../services/api';
-import {login, getToken} from '../../services/auth'
+import {login} from '../../services/auth'
 
 import './styles.css'
 

@@ -20,7 +20,6 @@ import BottleBeer from '../../staticImgs/bottleBeer.png'
 export default function Items() {
     
     const [beer, setBeers] = useState([])
-    const [beerId, setBeerId] = useState(0)
     var search = window.location.search.substring(1).split('&');
     //paginação
     const [page, setPage] = useState(1);
@@ -29,7 +28,7 @@ export default function Items() {
     
     const history = useHistory();
     
-    async function loadItems(){
+    const loadItems= async()=>{
         
         //document.querySelector(window).height();
         if(loading) {
@@ -39,21 +38,22 @@ export default function Items() {
             setLoading(true);
             const response = await api.post(`/items?search=${search[0]}&page=${page}`)
             setBeers([...beer, ...response.data.docs]);
+            setTotal(response.data.total)
             if(response.data.pages == 1){
                 return;
             }
             setPage(page + 1);
             setLoading(false);
         }catch(e) {
-            console.info(search[0])
             console.info(e)
             alert("not found");
             history.push('/')
         }
-    } 
+    }
     useEffect(() =>{
-        //async func to get all beers
+        //async func to get beers
         loadItems();
+        
     }, []);
 
     const getOnClickName = (event) => {
@@ -69,7 +69,7 @@ export default function Items() {
             <div className="item-container">
                 <header>
                     
-                    <h1>{search[0].replace('%20', " ")}</h1>
+                    <h1>{search[0].replace(/%20/gi, " ")}</h1>
                     <p>Pale ale is a top-fermented beer made with predominantly pale malt. 
                         The highest proportion of pale malts results in a lighter colour. 
                         The term first appeared around 1703 for 
@@ -95,7 +95,7 @@ export default function Items() {
                                         <strong>{item.country}</strong>
                                     </span>
                                     <img src={BottleBeer}/>
-                                    <Rater rating={5} total={5} interactive={false}></Rater>
+                                    <Rater rating={item.rate} total={5} interactive={false}></Rater>
                                     <button>
                                         <Link onClick={getOnClickName} className={item.name} style={{textDecoration:'none', color: 'black'}}>More About</Link>
                                     </button>      

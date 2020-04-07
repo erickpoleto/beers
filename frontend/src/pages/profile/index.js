@@ -35,31 +35,34 @@ export default function Profile() {
     rates();
   },[])
   return (
-    <div className="profile-container">
+    <div>
       <NavBar></NavBar>
-      <header>
-        <h1>{sessionStorage.getItem("@user")}</h1>
-      </header>  
-      <main>
-        <h2>Liked beers</h2>
+      <div className="profile-container">
+        
+        <header>
+          <h1>{sessionStorage.getItem("@user")}</h1>
+        </header>  
+        <main>
+          <h2>Liked beers</h2>
 
-        <ul>
-          {beersRate.map(item => {
-            return(
-              <li>
-                <h3>{item.beer.name}</h3>
-                <img src={beer}></img>
-                <Rater rating={item.rate} total={5} interactive={false}></Rater>
-                <button>
-                  <Link onClick={getOnClickName} className={item.beer.name} style={{textDecoration:'none', color: 'black'}}>More About</Link>
-                </button>
-              </li>
-            )
-          })
-          }
-        </ul>
-      </main>
-      <Footer></Footer>
+          <ul>
+            {beersRate.map(item => {
+              return(
+                <li>
+                  <h3>{item.beer.name}</h3>
+                  <img src={beer}></img>
+                  <Rater rating={item.rate} total={5} interactive={false}></Rater>
+                  <button>
+                    <Link onClick={getOnClickName} className={item.beer.name} style={{textDecoration:'none', color: 'black'}}>More About</Link>
+                  </button>
+                </li>
+              )
+            })
+            }
+          </ul>
+        </main>
+        <Footer></Footer>
+      </div>
     </div>
   );
 }
