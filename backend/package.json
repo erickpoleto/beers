@@ -24,7 +24,8 @@
     "react-native-paper": "^3.6.0",
     "react-router-dom": "^5.1.2",
     "require-dir": "^1.2.0",
-    "sqlite3": "^4.1.1"
+    "sqlite3": "^4.1.1",
+    "unsplash-js": "^6.0.0"
   },
   "devDependencies": {},
   "scripts": {

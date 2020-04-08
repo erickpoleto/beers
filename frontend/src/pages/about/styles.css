@@ -1,53 +1,28 @@
-
-.about-container {
-    margin-top: 80px;
-}
-.about-container header {
-    font-size: 18px;
-    margin-left: 50px;
-    margin-right: 50px;
-
-}
-.about-container main h1 {
-    text-align: center;
-}
-.about-container header strong {
-    margin-left: 0;
-}
-
 .about-container main {
+    margin-top: 100px;
     text-align: center;
-    margin-top: 20px;
 }
 
-.about-container main div {
-    background-color: white;
-    margin: 0 30px;
-    padding: 20px 0;
-    border-radius: 5px 5px 0 0;
-}
-
-
-.about-container main div img {
-    height: 150px;
-    width: 150px;
-}
-
-.about-container main div strong {
+.about-container main ul li {
     display: flex;
     flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.about-container main ul li strong {
+    margin: 4px 0 0 0;
     font-size: 18px;
-    margin-top: 5px;
+    color: #343336dc
 }
 
-.about-container main div strong a {
-    text-decoration: none;
-    color: blue;
+.about-container main ul li span {
+    margin-bottom: 10px;
+}
+.about-container main ul li img {
+    height: 200px;
+    width: 180px;
 }
 
-.about-container main div p {
-    margin-top: 20px;
-}
 
 @media (min-width: 500px) {
   

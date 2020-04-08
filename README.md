@@ -16,6 +16,8 @@
     npm install react-icons
     npm install react-router-dom
     npm install axios
+    npm install rater
+    npm install google-map-react
 
 
 

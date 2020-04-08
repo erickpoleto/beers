@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 
-import { FaPlusCircle, FaStar, FaAtom, FaMapMarkedAlt} from 'react-icons/fa'
+import { FaAtom, FaMapMarkedAlt} from 'react-icons/fa'
 import Rater from 'react-rater'
 import 'react-rater/lib/react-rater.css'
 
@@ -9,17 +9,16 @@ import './styles.css';
 import NavBar from '../navBar/index.js';
 import Footer from '../footer/index.js';
 import api from '../../services/api';
+import unsplashApi from '../../services/unsPlashApi';
 
 import { Waypoint } from 'react-waypoint';
 
 import { Link, useHistory } from 'react-router-dom';
 
-
-import BottleBeer from '../../staticImgs/bottleBeer.png'
-
 export default function Items() {
     
     const [beer, setBeers] = useState([])
+    const [images, setImages] = useState([])
     var search = window.location.search.substring(1).split('&');
     //paginação
     const [page, setPage] = useState(1);
@@ -38,6 +37,7 @@ export default function Items() {
             setLoading(true);
             const response = await api.post(`/items?search=${search[0]}&page=${page}`)
             setBeers([...beer, ...response.data.docs]);
+            unsPlash();
             setTotal(response.data.total)
             if(response.data.pages == 1){
                 return;
@@ -53,7 +53,6 @@ export default function Items() {
     useEffect(() =>{
         //async func to get beers
         loadItems();
-        
     }, []);
 
     const getOnClickName = (event) => {
@@ -62,6 +61,14 @@ export default function Items() {
             history.push(`/about?${event.target.className}`)
         }catch{
         }
+    }
+    const unsPlash = async () => {
+        const response = await unsplashApi.get(`search/photos?page=${page}&query=bottle%20of%20beer`)
+        const list = []
+        response.data.results.map(item => {
+            list.push(item.urls.small)
+        })
+        setImages([...images, ...list])
     }
     return(
         <div>
@@ -82,22 +89,22 @@ export default function Items() {
                 </header>
                 <main>
                     <ul>
-                        {beer.map( item => {
+                        {beer.map((item, index) => {
                             return(
                                 <li>
                                     <h2>{item.name}</h2>
                                     <span>
+                                        <strong>ibu: {item.ibu}</strong>
                                         <FaAtom size={25}></FaAtom>
-                                        <strong>{item.ibu}</strong>
                                     </span>
                                     <span>
                                         <FaMapMarkedAlt size={25}></FaMapMarkedAlt>
                                         <strong>{item.country}</strong>
                                     </span>
-                                    <img src={BottleBeer}/>
+                                    <img src={images[index]}/>
                                     <Rater rating={item.rate} total={5} interactive={false}></Rater>
                                     <button>
-                                        <Link onClick={getOnClickName} className={item.name} style={{textDecoration:'none', color: 'black'}}>More About</Link>
+                                        <Link onClick={getOnClickName} className={item.name.replace("S.A.P.A", "")} style={{textDecoration:'none', color: 'black'}}>More About</Link>
                                     </button>      
                                 </li>
                                 )
@@ -106,6 +113,7 @@ export default function Items() {
                     </ul>
                     <Waypoint onEnter={loadItems}></Waypoint>
                 </main>
+                {console.info(images)}
                 <Footer></Footer>
             </div>
         </div>

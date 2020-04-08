@@ -54,7 +54,7 @@
 }
 
 .item-container main ul li img {
-    height: 150px;
+    height: 200px;
     width: 150px;
 }
 
@@ -66,18 +66,20 @@
     color: grey;    
 }
 .item-container main ul li span{
-    margin-top: 5px;
+    margin: 5px 0 5px 0;
     display: flex;
     justify-content: center;
     align-items: center;
 }
-
+.item-container main ul li span strong{
+    margin-left: 5px;
+}
 .item-container main ul li button {
     width: 100%;
     height: 50px;
     margin-top: 6px;
     border: none;
-    background-color: #4481c5;
+    background: linear-gradient(#605ef5,#add1fa);
     
 }
 
@@ -85,6 +87,7 @@
     font-size: 20px;
     font-weight: bold;
     text-decoration: none;
+
 
 }
 

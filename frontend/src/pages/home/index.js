@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {FaSearch, FaPlusCircle, FaFacebookF, FaUser} from 'react-icons/fa'
 
-import api from'../../services/api'
+import unsplashApi from'../../services/unsPlashApi'
 import './styles.css'
 import Footer from '../footer/index.js'
 
@@ -14,7 +14,10 @@ export default function Home() {
 
     
     const [categories, setCategories] = useState([]);
-    const [search, setSearch] = useState('')
+    const [images, setImages] = useState([0]);
+   
+    const resp = [];
+    const [search, setSearch] = useState('');
     const history = useHistory();
     let username = sessionStorage.getItem('@user')
     let route = " ";
@@ -23,11 +26,21 @@ export default function Home() {
     }else{
         route = '/profile'
     }
-    useEffect(() => {     
+    
+    useEffect(() => {
+        unsPlash()
         setCategories(getCategories);
     }, []);
-    
-    
+
+    const unsPlash = async () => {
+        const response = await unsplashApi.get("search/photos?query=beer")
+        const list = []
+        response.data.results.map(item => {
+            list.push(item.urls.small)
+        })
+        setImages(list)
+    }
+
     const consult = async (e) => {
         try{
             //sessionStorage.setItem('@search', search)
@@ -58,10 +71,10 @@ export default function Home() {
                 </div>
             </header>
             <main>
-                <h2>Choose one category to see the BeerS</h2>
+                <h2>Categories</h2>
                 <ul>
-                    {categories.map(item =>             
-                        <li>    
+                    {categories.map((item, index) =>             
+                        <li style={{backgroundImage:"url(" + images[index] + ")"}}>    
                             <div>
                                 <strong>{item.category}</strong>
                                 <p>strong, good, and beauty</p>
@@ -73,7 +86,8 @@ export default function Home() {
                             </div>
                         </li>
                         )
-                    }         
+                    }  
+                    {console.info(categories)}
                 </ul>
             </main>
             <Footer></Footer>
