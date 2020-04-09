@@ -7,7 +7,7 @@ import './styles.css';
 
 export default function NavBar(props) {
 
-    const [filter, setFilter] = useState([]);
+    const [search, setSearch] = useState("");
     const history = useHistory()
     
     let username = sessionStorage.getItem('@user')
@@ -26,14 +26,12 @@ export default function NavBar(props) {
         main.classList.toggle('main');
         
     }
-
     const handleLogout = async (e) => {
         e.preventDefault();
         logout()
         sessionStorage.removeItem('@user')
         history.push('')
     }
-
     return (
         <div className="nav-bar-container">
             <nav className="nav-bar">
@@ -41,7 +39,7 @@ export default function NavBar(props) {
                     <FaBars size={25} color="black"></FaBars>
                 </button>
                 <span>
-                    <input onChange={props.current} onSubmit={props.name}></input>
+                    <input onChange={props.current}></input>
                     <strong><FaSearch size={20} color="black">
                     </FaSearch></strong>
                 </span>

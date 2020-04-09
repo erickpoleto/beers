@@ -6,7 +6,7 @@ module.exports = {
         try{
             const { page = 1, search, sort} = req.query
             const regex = new RegExp(search, "i")
-            const paginate = await Beer.paginate({$or:[{category:regex}, {name:regex}]}, {sort:{"name": -1}, page:page, limit: 10})
+            const paginate = await Beer.paginate({$or:[{category:regex}, {name:regex}]}, {sort:{"name": sort}, page:page, limit: 10})
             return res.json(paginate)
         }catch(err){
             console.info(err);

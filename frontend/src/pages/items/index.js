@@ -20,7 +20,8 @@ export default function Items() {
     const [beer, setBeers] = useState([])
     const [filtered, setFiltered] = useState([])
     const [images, setImages] = useState([])
-    var [sort, setSort]= useState(1)
+    const [sort, setSort]= useState(1)
+    const [searched, setSearched] = useState("")
     var search = window.location.search.substring(1).split('&');
     //paginação
     const [page, setPage] = useState(1);
@@ -39,9 +40,8 @@ export default function Items() {
             setLoading(true);
             const response = await api.post(`/items?search=${search[0]}&page=${page}&sort=${sort}`)
             console.info(sort)
-            setBeers([...beer, ...response.data.docs]);
             unsPlash();
-            setFiltered([...beer, ...response.data.docs])
+            setFiltered([...filtered, ...response.data.docs])
             setTotal(response.data.total)
             if(response.data.pages == 1){
                 return;
@@ -58,7 +58,7 @@ export default function Items() {
     useEffect(() =>{
         //async func to get beers
         loadItems();
-    }, []);
+    }, [sort]);
 
     const getOnClickName = (event) => {
         try{
@@ -77,10 +77,7 @@ export default function Items() {
     }
     const handleSearch = async(e) => {
         e.preventDefault()
-        const filter = beer.filter((beers) => {
-           return beers.name.toUpperCase().indexOf(e.target.value.toUpperCase()) !== -1
-        })
-        setFiltered([...filter])
+        history.push(`/items?${e.target.value}`)
     }
     return(
         <div>
@@ -95,7 +92,17 @@ export default function Items() {
                         beers made from malts dried with high-carbon coke, which resulted in a lighter colour than other</p>
                     <strong>sort by</strong>
                     <ul>
-                        <li><button onClick={e=>{}} style={{border:'none', background:'none'}}>name</button></li>
+                        <li><button onClick={e=>{
+                            if(sort===1){
+                                setSort(-1)
+                                setPage(1)
+                                setFiltered([])
+                            }else{
+                                setSort(1)
+                                setPage(1)
+                                setFiltered([])
+                            }
+                        }} style={{border:'none', background:'none'}}>name</button></li>
                         <li><button style={{border:'none', background:'none'}}>country</button></li>
                     </ul>
                 </header>
