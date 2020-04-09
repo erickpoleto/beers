@@ -17,13 +17,36 @@ import NavBar from '../navBar'
 
 export default function Profile() {
 
-  const [beersRate, setBeersRate] = useState([]);
+  const [beer, setBeer] = useState([]);
+  const [filtered, setFiltered] = useState([])
+  const [page, setPage] = useState(1)
+  const [total, setTotal] = useState(0)
+  const [load, setLoad] = useState(false)
   const [images, setImages] = useState([])
   const history = useHistory();
 
-  const rates = async() => {
-    const response = await api.get('/testUsers')
-    setBeersRate(response.data.UserRate[0].beer)
+
+
+  const loadRates = async() => {
+    if(load){
+      return;
+    }try{ 
+      setLoad(true);
+      const response = await api.get(`/profile?page=${page}`)
+      setBeer([...beer, ...response.data.UserRate.docs]);
+      unsPlash();
+      setFiltered([...beer, ...response.data.UserRate.docs])
+      setTotal(response.data.total)
+      if(response.data.pages == 1){
+          return;
+      }
+      setPage(page + 1);
+      setLoad(false);
+    }catch(e) {
+      console.info(e)
+      alert("not found");
+      history.push('/')
+    }
   }
   
   const getOnClickName = (event) => {
@@ -42,14 +65,19 @@ export default function Profile() {
         })
     setImages([...images, ...list])
   }
+  const handleSearch = async(e) => {
+    e.preventDefault()
+    const filter = beer.filter((beer) => {return beer.name.toUpperCase().indexOf(e.target.value.toUpperCase()) !== -1})
+    setFiltered(filter)
+  }
 
   useEffect(()=>{
-    rates();
+    loadRates();
     unsPlash();
   },[])
   return (
     <div>
-      <NavBar></NavBar>
+      <NavBar current={handleSearch}></NavBar>
       <div className="profile-container">
         
         <header>
@@ -59,12 +87,12 @@ export default function Profile() {
           <h2>Rated</h2>
 
           <ul>
-            {beersRate.map((item, index) => {
+            {filtered.map((item, index) => {
               return(
                 <li>
                   <h3>{item.beer.name}</h3>
                   <img src={images[index]}></img>
-                  <Rater rating={item.rate} total={5} interactive={false}></Rater>
+                  <Rater rating={item.beer.rate} total={5} interactive={false}></Rater>
                   <button>
                     <Link onClick={getOnClickName} className={item.beer.name} style={{textDecoration:'none', color: 'black'}}>More About</Link>
                   </button>

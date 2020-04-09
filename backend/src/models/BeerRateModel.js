@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const mongoosePaginate = require("mongoose-paginate")
 
 const BeerRateSchema = new mongoose.Schema({
     beer: {
@@ -16,5 +17,6 @@ const BeerRateSchema = new mongoose.Schema({
     }
 })
 
+BeerRateSchema.plugin(mongoosePaginate);
 module.exports = mongoose.model('BeerRate', BeerRateSchema);
 

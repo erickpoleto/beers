@@ -40,18 +40,19 @@ export default function NavBar(props) {
                 <button onClick={showHiddenBar}>
                     <FaBars size={25} color="black"></FaBars>
                 </button>
-                <strong><Link style={{textDecoration:'none', color:'black'}} to='/'>BeerS</Link></strong>
                 <span>
-                    <FaSearch size={25} color="black">
-                    </FaSearch>
+                    <input onChange={props.current} onSubmit={props.name}></input>
+                    <strong><FaSearch size={20} color="black">
+                    </FaSearch></strong>
                 </span>
             </nav>
             <main className="main:disabled">
                 <ul>
-                    <li><strong><Link style={{textDecoration:"none"}} to={route}>{direction}</Link></strong></li>
-                    <li><strong>Contact Us</strong></li>
+                    <li><strong><Link style={{textDecoration:"none", color:"black"}} to={route}>{direction}</Link></strong></li>
+                    <li><strong><Link style={{textDecoration:"none", color:"black"}} to={'/'}>Home</Link></strong></li>
+                    <li style={{marginTop:"100px"}}><strong><Link className="logout" onClick={handleLogout}>logout</Link></strong></li>
                 </ul>
-                <Link className="logout" onClick={handleLogout}>logout</Link>
+                
             </main>
         </div>
     );

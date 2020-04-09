@@ -15,8 +15,6 @@ export default function Home() {
     
     const [categories, setCategories] = useState([]);
     const [images, setImages] = useState([0]);
-   
-    const resp = [];
     const [search, setSearch] = useState('');
     const history = useHistory();
     let username = sessionStorage.getItem('@user')

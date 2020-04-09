@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import './styles.css';
 
 import { FaAtom, FaMapMarked, FaMapMarker, FaBlog, FaSignature, FaBook} from 'react-icons/fa'
@@ -76,7 +76,6 @@ export default function About() {
                             })
                         }
                     </ul>
-                        {console.info(image)}
                 </main>
                 <Footer></Footer>
             </div>

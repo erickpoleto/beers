@@ -9,8 +9,6 @@ const MongoBeerRate = require('./controllers/BeersRateController');
 //normal routes
 const routes = express.Router()
 //routes that needs tokens
-const UsersRate = require('./models/UsersRateModel'); 
-
 
 //user
 routes.get('/', MongoUsers.index)
@@ -29,10 +27,6 @@ routes.post('/about', MongoBeer.indexSearch);
 routes.use(authMiddleware).post('/rate', MongoBeerRate.create)
 routes.get('/rate/all', MongoBeerRate.index)
 routes.delete('/delete', MongoBeerRate.delete)
-
-routes.get('/testUsers', async(req, res) =>{
-    const UserRate = await UsersRate.find({user: req.userId}).populate(["user", "beer"]).populate({path: "beer", populate: {path:"beer"}})
-    return res.json({UserRate})
-})
+routes.get('/profile', MongoBeerRate.profile);
 
 module.exports = (routes);

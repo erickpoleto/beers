@@ -23,6 +23,14 @@
     background: none;
 }
 
+.nav-bar-container span input {
+    border-radius: 3px;
+    border: none;
+    border-bottom: 2px solid grey;
+}
+.nav-bar-container span input:focus{
+    border-bottom: 2px solid green;
+}
 /*button click*/
 
 .nav-bar-container main {

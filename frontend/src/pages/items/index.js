@@ -18,7 +18,9 @@ import { Link, useHistory } from 'react-router-dom';
 export default function Items() {
     
     const [beer, setBeers] = useState([])
+    const [filtered, setFiltered] = useState([])
     const [images, setImages] = useState([])
+    var [sort, setSort]= useState(1)
     var search = window.location.search.substring(1).split('&');
     //paginação
     const [page, setPage] = useState(1);
@@ -35,9 +37,11 @@ export default function Items() {
         }
         try{ 
             setLoading(true);
-            const response = await api.post(`/items?search=${search[0]}&page=${page}`)
+            const response = await api.post(`/items?search=${search[0]}&page=${page}&sort=${sort}`)
+            console.info(sort)
             setBeers([...beer, ...response.data.docs]);
             unsPlash();
+            setFiltered([...beer, ...response.data.docs])
             setTotal(response.data.total)
             if(response.data.pages == 1){
                 return;
@@ -50,6 +54,7 @@ export default function Items() {
             history.push('/')
         }
     }
+
     useEffect(() =>{
         //async func to get beers
         loadItems();
@@ -70,9 +75,16 @@ export default function Items() {
         })
         setImages([...images, ...list])
     }
+    const handleSearch = async(e) => {
+        e.preventDefault()
+        const filter = beer.filter((beers) => {
+           return beers.name.toUpperCase().indexOf(e.target.value.toUpperCase()) !== -1
+        })
+        setFiltered([...filter])
+    }
     return(
         <div>
-            <NavBar></NavBar>
+            <NavBar current={handleSearch}></NavBar>
             <div className="item-container">
                 <header>
                     
@@ -83,13 +95,13 @@ export default function Items() {
                         beers made from malts dried with high-carbon coke, which resulted in a lighter colour than other</p>
                     <strong>sort by</strong>
                     <ul>
-                        <li><button style={{border:'none', background:'none'}}>name</button></li>
+                        <li><button onClick={e=>{}} style={{border:'none', background:'none'}}>name</button></li>
                         <li><button style={{border:'none', background:'none'}}>country</button></li>
                     </ul>
                 </header>
                 <main>
                     <ul>
-                        {beer.map((item, index) => {
+                        {filtered.map((item, index) => {
                             return(
                                 <li>
                                     <h2>{item.name}</h2>
@@ -113,7 +125,6 @@ export default function Items() {
                     </ul>
                     <Waypoint onEnter={loadItems}></Waypoint>
                 </main>
-                {console.info(images)}
                 <Footer></Footer>
             </div>
         </div>

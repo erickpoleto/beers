@@ -56,5 +56,11 @@ module.exports = {
         }catch(err){
             return res.send("deletados")
         }
+    },
+    async profile(req, res) {
+        const {page = 1} = req.query
+        const UserRate = await BeerRate.paginate({user: req.userId},
+            {populate:"beer", select:{"beer":1, "_id": 0}, page:page, limit:10})  
+        return res.json({UserRate})  
     }
 }
