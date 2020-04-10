@@ -1,9 +1,7 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 
 import api from '../../services/api'
-import unsplashApi from '../../services/unsPlashApi'
-
-import {Link, useHistory} from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
 
 import beer from '../../staticImgs/bottleBeer.png'
 
@@ -19,6 +17,7 @@ export default function Profile() {
 
   const [beer, setBeer] = useState([]);
   const [filtered, setFiltered] = useState([])
+  const [sort, setSort] = useState(1)
   const [page, setPage] = useState(1)
   const [total, setTotal] = useState(0)
   const [load, setLoad] = useState(false)
@@ -27,74 +26,83 @@ export default function Profile() {
 
 
 
-  const loadRates = async() => {
-    if(load){
+  const loadRates = async () => {
+    if (load) {
       return;
-    }try{ 
+    } try {
       setLoad(true);
-      const response = await api.get(`/profile?page=${page}`)
-      setBeer([...beer, ...response.data.UserRate.docs]);
-      unsPlash();
-      setFiltered([...beer, ...response.data.UserRate.docs])
+      const response = await api.get(`/profile?page=${page}&sort=${sort}`)
+      console.info(sort)
+      setFiltered([...filtered, ...response.data.UserRate.docs])
       setTotal(response.data.total)
-      if(response.data.pages == 1){
-          return;
+      if (response.data.pages == 1) {
+        return;
+      }
+      if (response.data.page == response.data.pages) {
+        return;
       }
       setPage(page + 1);
       setLoad(false);
-    }catch(e) {
+    } catch (e) {
       console.info(e)
       alert("not found");
       history.push('/')
     }
   }
-  
+
   const getOnClickName = (event) => {
-    try{
-        event.preventDefault();
-        history.push(`/about?${event.target.className}`)
-    }catch{
-      
+    try {
+      event.preventDefault();
+      history.push(`/about?${event.target.className}`)
+    } catch{
+
     }
   }
-  const unsPlash = async () => {
-    const response = await unsplashApi.get(`search/photos?&query=bottle%20of%20beer`)
-        const list = []
-        response.data.results.map(item => {
-            list.push(item.urls.small)
-        })
-    setImages([...images, ...list])
-  }
-  const handleSearch = async(e) => {
+
+  const handleSearch = async (e) => {
     e.preventDefault()
-    const filter = beer.filter((beer) => {return beer.name.toUpperCase().indexOf(e.target.value.toUpperCase()) !== -1})
-    setFiltered(filter)
+
   }
 
-  useEffect(()=>{
+  useEffect(() => {
     loadRates();
-    unsPlash();
-  },[])
+  }, [sort])
+
   return (
     <div>
-      <NavBar current={handleSearch}></NavBar>
+      <NavBar search={handleSearch}></NavBar>
       <div className="profile-container">
-        
+
         <header>
           <h1>{sessionStorage.getItem("@user")}</h1>
-        </header>  
+        </header>
         <main>
           <h2>Rated</h2>
+          <strong>sort by</strong>
+          <ul>
+            <li><button onClick={e => {
+              if (sort === 1) {
+                setSort(-1)
+                setPage(1)
+                setFiltered([])
+              } else {
+                setSort(1)
+                setPage(1)
+                setFiltered([])
+              }
+            }} style={{ border: 'none', background: 'none' }}>date</button></li>
 
+          </ul>
           <ul>
             {filtered.map((item, index) => {
-              return(
+              return (
                 <li>
                   <h3>{item.beer.name}</h3>
-                  <img src={images[index]}></img>
+                  <strong>{item.createdAt}</strong>
+                  <img src={item.url}></img>
                   <Rater rating={item.beer.rate} total={5} interactive={false}></Rater>
                   <button>
-                    <Link onClick={getOnClickName} className={item.beer.name} style={{textDecoration:'none', color: 'black'}}>More About</Link>
+                    <Link onClick={getOnClickName} className={item.beer.name} style={{ textDecoration: 'none', color: 'black' }}>More About</Link>
                   </button>
                 </li>
               )
@@ -102,6 +110,7 @@ export default function Profile() {
             }
           </ul>
         </main>
+        {console.info(filtered)}
         <Footer></Footer>
       </div>
     </div>

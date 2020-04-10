@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 
-import { FaAtom, FaMapMarkedAlt} from 'react-icons/fa'
+import { FaAtom, FaMapMarkedAlt, FaWindowRestore} from 'react-icons/fa'
 import Rater from 'react-rater'
 import 'react-rater/lib/react-rater.css'
 
@@ -20,8 +20,9 @@ export default function Items() {
     const [beer, setBeers] = useState([])
     const [filtered, setFiltered] = useState([])
     const [images, setImages] = useState([])
+
+    const [sortName, setSortName]= useState(1)
     const [sort, setSort]= useState(1)
-    const [searched, setSearched] = useState("")
     var search = window.location.search.substring(1).split('&');
     //paginação
     const [page, setPage] = useState(1);
@@ -38,12 +39,22 @@ export default function Items() {
         }
         try{ 
             setLoading(true);
-            const response = await api.post(`/items?search=${search[0]}&page=${page}&sort=${sort}`)
-            console.info(sort)
+            const response = await api.post(`/items?category=${search[0]}&search=${search[1]}&page=${page}&sortName=${sortName}&sort=${sort}`)
+            console.info(response.data)
+            console.info(response.data.page)
+            if(response.data.docs.length === 0){
+                alert("nothing found")
+                setPage(1)
+                history.push(`/items?${search[0]}&`)
+                window.location.reload("true")
+            }
             unsPlash();
             setFiltered([...filtered, ...response.data.docs])
             setTotal(response.data.total)
             if(response.data.pages == 1){
+                return;
+            }
+            if(response.data.page == response.data.pages){
                 return;
             }
             setPage(page + 1);
@@ -54,16 +65,10 @@ export default function Items() {
             history.push('/')
         }
     }
-
-    useEffect(() =>{
-        //async func to get beers
-        loadItems();
-    }, [sort]);
-
     const getOnClickName = (event) => {
         try{
             event.preventDefault();
-            history.push(`/about?${event.target.className}`)
+            history.push(`/about?${event.target.className.replace(/#/gi, "")}`)
         }catch{
         }
     }
@@ -77,11 +82,19 @@ export default function Items() {
     }
     const handleSearch = async(e) => {
         e.preventDefault()
-        history.push(`/items?${e.target.value}`)
+        setPage(1)
+        history.push(`/items?${search[0]}&${e.target.querySelector("input").value}`)
+        setFiltered([])
     }
+    
+    useEffect(() =>{
+        //async func to get beers
+        loadItems();
+    }, [sort, filtered]);
+
     return(
         <div>
-            <NavBar current={handleSearch}></NavBar>
+            <NavBar search={handleSearch}></NavBar>
             <div className="item-container">
                 <header>
                     
@@ -94,16 +107,26 @@ export default function Items() {
                     <ul>
                         <li><button onClick={e=>{
                             if(sort===1){
+                                setSortName("name")
                                 setSort(-1)
-                                setPage(1)
-                                setFiltered([])
                             }else{
+                                setSortName("name")
                                 setSort(1)
-                                setPage(1)
-                                setFiltered([])
                             }
+                            setPage(1)
+                            setFiltered([])
                         }} style={{border:'none', background:'none'}}>name</button></li>
-                        <li><button style={{border:'none', background:'none'}}>country</button></li>
+                        <li><button onClick={e=>{
+                            if(sort===1){
+                                setSortName("ibu")
+                                setSort(-1)
+                            }else{
+                                setSortName("ibu")
+                                setSort(1)
+                            }
+                            setPage(1)
+                            setFiltered([])
+                        }} style={{border:'none', background:'none'}}>Ibu</button></li>
                     </ul>
                 </header>
                 <main>
@@ -121,7 +144,9 @@ export default function Items() {
                                         <strong>{item.country}</strong>
                                     </span>
                                     <img src={images[index]}/>
-                                    <Rater rating={item.rate} total={5} interactive={false}></Rater>
+                                    <span>
+                                        <Rater rating={item.rate} total={5} interactive={false}></Rater>
+                                    </span>
                                     <button>
                                         <Link onClick={getOnClickName} className={item.name.replace("S.A.P.A", "")} style={{textDecoration:'none', color: 'black'}}>More About</Link>
                                     </button>      

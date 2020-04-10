@@ -9,7 +9,7 @@ const Users = require('../models/UsersModel')
 
 module.exports = {
     async create(req, res){
-        const {beer, rate} = req.body
+        const {beer, rate, url} = req.body
         try{
             const userVerify = Users.findOne({user: req.userId})
 
@@ -21,7 +21,7 @@ module.exports = {
                 await updateRateBeer(beer);
                 return res.status(200).send();             
             }
-            const beerRate = await BeerRate.create({user: req.userId, rate: rate, beer: beer });
+            const beerRate = await BeerRate.create({user: req.userId, rate: rate, beer: beer, url:url });
             await updateRateBeer(beer);
 
             if(!await UsersRate.findOne({user: req.userId})){
@@ -58,9 +58,10 @@ module.exports = {
         }
     },
     async profile(req, res) {
-        const {page = 1} = req.query
+        const {page = 1, sort=1} = req.query
+        const reg = new RegExp("", "i", "^\d$")
         const UserRate = await BeerRate.paginate({user: req.userId},
-            {populate:"beer", select:{"beer":1, "_id": 0}, page:page, limit:10})  
+            {populate:"beer", sort: {"createdAt" : sort}, page:page, limit:10})
         return res.json({UserRate})  
     }
 }

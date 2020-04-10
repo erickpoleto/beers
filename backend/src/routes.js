@@ -22,7 +22,7 @@ routes.post('/session/resetPassword', MongoSession.resetPassword);
 routes.get('/token/test', MongoApp.index)
 //beers
 routes.post('/items', MongoBeer.indexSearch);
-routes.post('/about', MongoBeer.indexSearch);
+routes.post('/about', MongoBeer.indexNameBeer);
 //beerRate
 routes.use(authMiddleware).post('/rate', MongoBeerRate.create)
 routes.get('/rate/all', MongoBeerRate.index)

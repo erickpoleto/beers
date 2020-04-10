@@ -4,9 +4,10 @@ const BeerRate = require("../models/BeerRateModel")
 module.exports = {
     async indexSearch(req, res) {
         try{
-            const { page = 1, search, sort} = req.query
-            const regex = new RegExp(search, "i")
-            const paginate = await Beer.paginate({$or:[{category:regex}, {name:regex}]}, {sort:{"name": sort}, page:page, limit: 10})
+            const { page = 1, search, sortName, sort, category} = req.query
+            const regCat = new RegExp(category, "i")
+            const regex = new RegExp(search, "i","^\d$")
+            const paginate = await Beer.paginate({$or:[{category:regCat, name:regex}]}, {sort: {[sortName] : sort}, page:page, limit: 10})
             return res.json(paginate)
         }catch(err){
             console.info(err);
@@ -14,8 +15,9 @@ module.exports = {
         }
     },
     async indexNameBeer(req, res){
-        const {name} = req.body
-        const beers = await Beer.find({name : name});
+        const {search} = req.query
+        const regex = new RegExp(search, "i")
+        const beers = await Beer.find({name : search});
         return res.json(beers)
     }
 }

@@ -16,12 +16,16 @@ export default function Home() {
     const [categories, setCategories] = useState([]);
     const [images, setImages] = useState([0]);
     const [search, setSearch] = useState('');
+    const [category, setCategory] = useState("");
     const history = useHistory();
     let username = sessionStorage.getItem('@user')
+    let log = ""
     let route = " ";
     if(username == null){
+        log = "login"
         route = '/login'
     }else{
+        log = "profile"
         route = '/profile'
     }
     
@@ -42,7 +46,7 @@ export default function Home() {
     const consult = async (e) => {
         try{
             //sessionStorage.setItem('@search', search)
-            await history.push(`/items?${search}`)
+            await history.push(`/items?${category}&${search}`)
         }catch(err){
             console.info(err)
             alert('something went wrong, try again')
@@ -54,7 +58,7 @@ export default function Home() {
                 <div>
                     <span>
                         <Link to={route} style={{textDecoration:'none'}}>
-                        <strong>{username}</strong>
+                        <strong>{log}</strong>
                         <FaUser size={30} color='white'></FaUser>
                         </Link>
                     </span>
@@ -77,7 +81,7 @@ export default function Home() {
                                 <strong>{item.category}</strong>
                                 <p>strong, good, and beauty</p>
                                 <form onSubmit={consult}> 
-                                    <button type="submit" onClick={async e=> await setSearch(item.category)}>
+                                    <button type="submit" onClick={async e=> await setCategory(item.category)}>
                                         <FaPlusCircle size={40} color="white"></FaPlusCircle>
                                     </button>    
                                 </form>
@@ -85,7 +89,6 @@ export default function Home() {
                         </li>
                         )
                     }  
-                    {console.info(categories)}
                 </ul>
             </main>
             <Footer></Footer>

@@ -19,20 +19,25 @@ export default function About() {
     const name = window.location.search.substring(1).split('&');
     const random = Math.floor(Math.random() * 10);
 
+    const history = useHistory();
+
     const getName = async() => {
         try{
             const response = await api.post(`/about?search=${name[0]}`)
-            setBeer(response.data.docs)
+            setBeer(response.data)
+            console.info(name[0])
+            console.info(response.data)
         }catch(e){
             alert("something went wrong")
         }
     }
 
-    const rate = async (id,rate) => {
+    const rate = async (id,rate, url) => {
         try{
             const data = {
                 "beer": id.toString(),
-                "rate": rate
+                "rate": rate,
+                "url": url
             }
             const response = await api.post('/rate', data)
         }catch(e){
@@ -44,6 +49,10 @@ export default function About() {
         
         setImage(response.data.results[random].urls.small)
     }
+    const handleSearch = async(e) => {
+        e.preventDefault()
+        history.push(`/items?${e.target.querySelector("input").value}`)
+    }
 
     useEffect(() => {
         getName();
@@ -51,7 +60,7 @@ export default function About() {
     }, []);
 
     return(
-        <div><NavBar></NavBar>
+        <div><NavBar search={handleSearch}></NavBar>
             <div className="about-container">
                 <main>
                     <ul>
@@ -65,7 +74,7 @@ export default function About() {
                                     <strong><FaMapMarker size={20} style={{marginRight:"5px"}}></FaMapMarker>{item.city}</strong>
                                     <strong><FaAtom size={20} style={{marginRight:"5px"}}></FaAtom> ibu:{item.ibu}</strong>
                                     <strong><FaBlog size={20} style={{marginRight:"5px"}}></FaBlog><a href="/">{item.site}</a></strong>
-                                    <span><Rater onRating={async (rating)=>{rate(item._id, rating.rating)}} rating={item.rate} total={5} interactive={true}></Rater></span>
+                                    <span><Rater onRating={async (rating)=>{rate(item._id, rating.rating, image)}} rating={item.rate} total={5} interactive={true}></Rater></span>
                                     <strong><FaBook size={20}></FaBook></strong>
                                     <p>
                                         {item.description}

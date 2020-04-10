@@ -14,6 +14,13 @@ const BeerRateSchema = new mongoose.Schema({
     },
     rate: {
         type:Number
+    },
+    url: {
+        type: String
+    },
+    createdAt: {
+        type: Date,
+        default: Date.now
     }
 })
 

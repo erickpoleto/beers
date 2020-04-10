@@ -38,11 +38,11 @@ export default function NavBar(props) {
                 <button onClick={showHiddenBar}>
                     <FaBars size={25} color="black"></FaBars>
                 </button>
-                <span>
-                    <input onChange={props.current}></input>
-                    <strong><FaSearch size={20} color="black">
-                    </FaSearch></strong>
-                </span>
+                <form onSubmit={ props.search }>
+                    <input></input>
+                    <button type="submit"><FaSearch size={20} color="black">
+                    </FaSearch></button>
+                </form>
             </nav>
             <main className="main:disabled">
                 <ul>

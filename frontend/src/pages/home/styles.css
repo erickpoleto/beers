@@ -31,7 +31,7 @@
 
 }
 
-.home-container div h1 {
+.home-container header div h1 {
     font-size: 65px;
     color: #d5bc2b; 
     margin-top: 80px;
@@ -76,13 +76,16 @@
 .home-container main h2 {
     font-size: 25px;
     text-align: center;
-    margin-top: 10px;   
+    margin-top: 10px;
+    margin-top: 50px;
 }
 
 .home-container ul {
     display: flex;
     flex-direction: column;
     align-items: center;
+    margin-top: 30px;
+    margin-bottom: 100px;
 }
 
 .home-container main ul li {
@@ -121,4 +124,31 @@
     text-align: end;
     margin-top: 10px;
     margin-bottom: 20px;
+}
+
+@media(min-width:700px){
+    
+    .home-container header{
+        height: 750px;
+    }
+    .home-container header span{
+        margin-right: 80px;
+    }
+    .home-container header div h1{
+        font-size: 8rem;
+    }
+    .home-container header div strong{
+        margin-top: 50px;
+        color: white;
+    }
+    .home-container header form input{
+        padding: 25px;
+        width: 50%;
+    }
+    .home-container main ul {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        align-items: center;
+        grid-gap: 30px;
+    }
 }
