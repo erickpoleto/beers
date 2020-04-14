@@ -45,7 +45,7 @@
     height: 100%;
     width: 50%;
     position: fixed;
-    background-color: #f0f0f5;
+    background-color: white;
 }
 
 .nav-bar-container .main ul li {
@@ -58,13 +58,15 @@
 }
 
 @media(min-width:700px) {
-    .nav-bar-container {
-        width: 100%;
-        margin: 0 auto;
+    .nav-bar-container button {
+        width: 10%;
+        
     }
-    .nav-bar-container nav {
-        width: 90%;
-        margin: 0 auto;
+    .nav-bar-container form input{
+        width: 500px;
+    }
+    .nav-bar-container button {
+        margin-right: 200px;
     }
 }
 

@@ -132,7 +132,7 @@
         height: 750px;
     }
     .home-container header span{
-        margin-right: 80px;
+        margin-right: 20%;
     }
     .home-container header div h1{
         font-size: 8rem;
@@ -143,7 +143,7 @@
     }
     .home-container header form input{
         padding: 25px;
-        width: 50%;
+        width: 30%;
     }
     .home-container main ul {
         display: grid;

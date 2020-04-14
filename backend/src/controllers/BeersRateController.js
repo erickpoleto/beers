@@ -58,10 +58,20 @@ module.exports = {
         }
     },
     async profile(req, res) {
-        const {page = 1, sort=1} = req.query
-        const reg = new RegExp("", "i", "^\d$")
+        const {page = 1, sort=1, search=""} = req.query
+        try{
         const UserRate = await BeerRate.paginate({user: req.userId},
-            {populate:"beer", sort: {"createdAt" : sort}, page:page, limit:10})
-        return res.json({UserRate})  
+            {populate:"beer", sort: {"createdAt" : sort}, page:page, limit:10}, async(err, value)=>{
+                const list = []
+                value.docs.forEach(item=>{
+                    if(item.beer.name.toLowerCase().indexOf(search.toLowerCase())>-1){
+                        list.push(item)
+                    }
+                }) 
+                return res.json({list:list, pages: value.pages, page: value.page, total: list.length})
+            })
+        }catch(err){
+            return res.json({err: "something went wrong"})
+        }
     }
 }

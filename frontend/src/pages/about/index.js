@@ -51,7 +51,7 @@ export default function About() {
     }
     const handleSearch = async(e) => {
         e.preventDefault()
-        history.push(`/items?${e.target.querySelector("input").value}`)
+        history.push(`/items?&${e.target.querySelector("input").value}`)
     }
 
     useEffect(() => {
@@ -63,28 +63,29 @@ export default function About() {
         <div><NavBar search={handleSearch}></NavBar>
             <div className="about-container">
                 <main>
-                    <ul>
+                        
                         {beer.map( item => {
                             return(
-                                <li>
-                                    <h1>{item.name}</h1>
-                                    <img src={image}></img>
-                                    <strong><FaSignature size={20} style={{marginRight:"5px"}}></FaSignature>{item.category}</strong>
-                                    <strong><FaMapMarked size={20} style={{marginRight:"5px"}}></FaMapMarked>{item.country}</strong>
-                                    <strong><FaMapMarker size={20} style={{marginRight:"5px"}}></FaMapMarker>{item.city}</strong>
-                                    <strong><FaAtom size={20} style={{marginRight:"5px"}}></FaAtom> ibu:{item.ibu}</strong>
-                                    <strong><FaBlog size={20} style={{marginRight:"5px"}}></FaBlog><a href="/">{item.site}</a></strong>
-                                    <span><Rater onRating={async (rating)=>{rate(item._id, rating.rating, image)}} rating={item.rate} total={5} interactive={true}></Rater></span>
-                                    <strong><FaBook size={20}></FaBook></strong>
-                                    <p>
-                                        {item.description}
-                                    </p>
+                                <div className="maindiv-container">
                                     
-                                </li>
+                                    <img src={image}></img>
+                                    <div className="maindiv-info">
+                                        <h1>{item.name}</h1>
+                                        <strong><FaSignature size={20} style={{marginRight:"5px"}}></FaSignature>{item.category}</strong>
+                                        <strong><FaMapMarked size={20} style={{marginRight:"5px"}}></FaMapMarked>{item.country}</strong>
+                                        <strong><FaMapMarker size={20} style={{marginRight:"5px"}}></FaMapMarker>{item.city}</strong>
+                                        <strong><FaAtom size={20} style={{marginRight:"5px"}}></FaAtom> ibu:{item.ibu}</strong>
+                                        <strong><FaBlog size={20} style={{marginRight:"5px"}}></FaBlog><a href="/">{item.site}</a></strong>
+                                        <span><Rater onRating={async (rating)=>{rate(item._id, rating.rating, image)}} rating={item.rate} total={5} interactive={true}></Rater></span>
+                                        <strong><FaBook size={20}></FaBook></strong>
+                                        <p>
+                                            {item.description}
+                                        </p>
+                                    </div>
+                                </div>
                                 );
                             })
                         }
-                    </ul>
                 </main>
                 <Footer></Footer>
             </div>

@@ -3,8 +3,6 @@ import React, { useState, useEffect } from 'react';
 import api from '../../services/api'
 import { Link, useHistory } from 'react-router-dom'
 
-import beer from '../../staticImgs/bottleBeer.png'
-
 import Rater from 'react-rater'
 import 'react-rater/lib/react-rater.css'
 
@@ -15,30 +13,28 @@ import NavBar from '../navBar'
 
 export default function Profile() {
 
-  const [beer, setBeer] = useState([]);
   const [filtered, setFiltered] = useState([])
   const [sort, setSort] = useState(1)
   const [page, setPage] = useState(1)
   const [total, setTotal] = useState(0)
   const [load, setLoad] = useState(false)
-  const [images, setImages] = useState([])
+
   const history = useHistory();
-
-
+  var search = window.location.search.substring(1).split('&'); 
 
   const loadRates = async () => {
     if (load) {
       return;
     } try {
       setLoad(true);
-      const response = await api.get(`/profile?page=${page}&sort=${sort}`)
+      const response = await api.get(`/profile?page=${page}&sort=${sort}&search=${search[0]}`)
       console.info(sort)
-      setFiltered([...filtered, ...response.data.UserRate.docs])
+      setFiltered([...filtered, ...response.data.list])
       setTotal(response.data.total)
-      if (response.data.pages == 1) {
+      if (response.data.pages === 1) {
         return;
       }
-      if (response.data.page == response.data.pages) {
+      if (response.data.page === response.data.pages) {
         return;
       }
       setPage(page + 1);
@@ -61,7 +57,9 @@ export default function Profile() {
 
   const handleSearch = async (e) => {
     e.preventDefault()
-
+    setPage(1)
+    history.push(`/profile?${e.target.querySelector("input").value}`)
+    setFiltered([])
   }
 
   useEffect(() => {
@@ -91,7 +89,6 @@ export default function Profile() {
                 setFiltered([])
               }
             }} style={{ border: 'none', background: 'none' }}>date</button></li>
-
           </ul>
           <ul>
             {filtered.map((item, index) => {
@@ -110,7 +107,6 @@ export default function Profile() {
             }
           </ul>
         </main>
-        {console.info(filtered)}
         <Footer></Footer>
       </div>
     </div>

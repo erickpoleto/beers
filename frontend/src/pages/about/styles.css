@@ -3,44 +3,49 @@
     text-align: center;
 }
 
-.about-container main ul li {
+.maindiv-container, .maindiv-info {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
 }
-.about-container main ul li strong {
+.about-container main div strong {
     margin: 4px 0 0 0;
     font-size: 18px;
     color: #343336dc
 }
 
-.about-container main ul li span {
+.about-container main div span {
     margin-bottom: 10px;
 }
-.about-container main ul li img {
+.about-container main div img {
     height: 200px;
     width: 180px;
 }
 
 @media (min-width: 700px) {
+    .about-container main {
+        width: 50%;
+        margin-left: auto;
+        margin-right: auto;
+    }
     .about-container main h1 {
         font-size: 2rem;
         margin-bottom: 30px;
     }
-    .about-container main ul li {
+    .maindiv-container {
         flex-direction: row;
     }
-    .about-container main ul li img {
-        height: 350px;
-        width: 400px;
+    .maindiv-info {
+        align-items: flex-start;
     }
-    .about-container main div {
-        display: flex;
-        flex-direction: column;
+    .maindiv-info p {
+        width: 30%;
+        text-align: left;
     }
-    .about-container main div span {
-        
+    .about-container main div img {
+        width: auto;
+        height: auto;
+        margin-right: 50px;
     }
-      
 }

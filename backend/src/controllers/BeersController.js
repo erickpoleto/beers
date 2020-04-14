@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 const Beer = require('../models/BeersModel')
-const BeerRate = require("../models/BeerRateModel")
+
 module.exports = {
     async indexSearch(req, res) {
         try{
@@ -19,5 +19,6 @@ module.exports = {
         const regex = new RegExp(search, "i")
         const beers = await Beer.find({name : search});
         return res.json(beers)
-    }
+    },
+    
 }

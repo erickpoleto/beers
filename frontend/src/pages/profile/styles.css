@@ -37,8 +37,8 @@
   justify-content: center;
   align-items: center;
   background: white;
+  box-shadow: 0 2px 5px;
   margin: 20px 0;
-  padding: 10px;
 }
 .profile-container main ul li button {
   width: 100%;
@@ -51,14 +51,24 @@
 
 .profile-container main ul li img {
   width: 200px;
-  height: 200px;
+  height: 100%;
 }
 
 
+@media(min-width:700px) {
+  .profile-container main ul {
+    margin: 0 auto;
+    align-items: center;
+    justify-content: center;
+    width: 40%;
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+  .profile-container main ul li {
+    margin: 10px auto;
+  }
 
-
-
-
+}
 
 
 .react-rater {

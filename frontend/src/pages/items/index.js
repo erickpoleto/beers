@@ -17,7 +17,6 @@ import { Link, useHistory } from 'react-router-dom';
 
 export default function Items() {
     
-    const [beer, setBeers] = useState([])
     const [filtered, setFiltered] = useState([])
     const [images, setImages] = useState([])
 
@@ -147,8 +146,8 @@ export default function Items() {
                                     <span>
                                         <Rater rating={item.rate} total={5} interactive={false}></Rater>
                                     </span>
-                                    <button>
-                                        <Link onClick={getOnClickName} className={item.name.replace("S.A.P.A", "")} style={{textDecoration:'none', color: 'black'}}>More About</Link>
+                                    <button onClick={getOnClickName} className={item.name.replace("S.A.P.A", "")} style={{textDecoration:'none', color: 'black'}}>
+                                        More about
                                     </button>      
                                 </li>
                                 )
