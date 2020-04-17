@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from 'react';
-
+import React, {useEffect, useState} from 'react'
 import api from '../../services/api'
 import { Link, useHistory } from 'react-router-dom'
 
@@ -17,28 +16,30 @@ export default function Profile() {
   const [sort, setSort] = useState(1)
   const [page, setPage] = useState(1)
   const [total, setTotal] = useState(0)
-  const [load, setLoad] = useState(false)
+  const [load, setLoading] = useState(false)
 
   const history = useHistory();
   var search = window.location.search.substring(1).split('&'); 
 
-  const loadRates = async () => {
+  const loadItems = async () => {
     if (load) {
       return;
-    } try {
-      setLoad(true);
+    } 
+    try {
+      setLoading(true);
       const response = await api.get(`/profile?page=${page}&sort=${sort}&search=${search[0]}`)
-      console.info(sort)
+      
       setFiltered([...filtered, ...response.data.list])
       setTotal(response.data.total)
-      if (response.data.pages === 1) {
+      if(response.data.pages == 1){
+        setLoading(false);  
         return;
       }
-      if (response.data.page === response.data.pages) {
+      if(response.data.page == response.data.pages){
+        setLoading(false);
         return;
       }
       setPage(page + 1);
-      setLoad(false);
     } catch (e) {
       console.info(e)
       alert("not found");
@@ -61,10 +62,10 @@ export default function Profile() {
     history.push(`/profile?${e.target.querySelector("input").value}`)
     setFiltered([])
   }
-
-  useEffect(() => {
-    loadRates();
-  }, [sort])
+  
+  useEffect(() =>{
+    loadItems();
+  }, [sort, filtered]);
 
   return (
     <div>
@@ -78,29 +79,25 @@ export default function Profile() {
           <h2>Rated</h2>
           <strong>sort by</strong>
           <ul>
-            <li><button onClick={e => {
+            <li className="sortLi"><button onClick={e => {
               if (sort === 1) {
                 setSort(-1)
-                setPage(1)
-                setFiltered([])
               } else {
                 setSort(1)
+              }
                 setPage(1)
                 setFiltered([])
-              }
             }} style={{ border: 'none', background: 'none' }}>date</button></li>
           </ul>
           <ul>
-            {filtered.map((item, index) => {
+            {filtered.map((item) => {
               return (
                 <li>
                   <h3>{item.beer.name}</h3>
                   <strong>{item.createdAt}</strong>
                   <img src={item.url}></img>
-                  <Rater rating={item.beer.rate} total={5} interactive={false}></Rater>
-                  <button>
-                    <Link onClick={getOnClickName} className={item.beer.name} style={{ textDecoration: 'none', color: 'black' }}>More About</Link>
-                  </button>
+                  <Rater rating={item.rate} total={5} interactive={false}></Rater>
+                  <button onClick={getOnClickName} className={item.beer.name}>More About</button>
                 </li>
               )
             })

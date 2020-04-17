@@ -51,9 +51,11 @@ export default function Items() {
             setFiltered([...filtered, ...response.data.docs])
             setTotal(response.data.total)
             if(response.data.pages == 1){
+                setLoading(false);  
                 return;
             }
             if(response.data.page == response.data.pages){
+                setLoading(false);  
                 return;
             }
             setPage(page + 1);
@@ -87,7 +89,6 @@ export default function Items() {
     }
     
     useEffect(() =>{
-        //async func to get beers
         loadItems();
     }, [sort, filtered]);
 
@@ -143,8 +144,9 @@ export default function Items() {
                                         <strong>{item.country}</strong>
                                     </span>
                                     <img src={images[index]}/>
-                                    <span>
+                                    <span style={{alignItems:"center"}}>
                                         <Rater rating={item.rate} total={5} interactive={false}></Rater>
+                                        <strong>{Math.round(item.rate).toString().replace(NaN, 0)}</strong>
                                     </span>
                                     <button onClick={getOnClickName} className={item.name.replace("S.A.P.A", "")} style={{textDecoration:'none', color: 'black'}}>
                                         More about

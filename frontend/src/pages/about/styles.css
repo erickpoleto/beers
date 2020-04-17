@@ -1,6 +1,5 @@
 .about-container main {
     margin-top: 100px;
-    text-align: center;
 }
 
 .maindiv-container, .maindiv-info {
@@ -19,8 +18,8 @@
     margin-bottom: 10px;
 }
 .about-container main div img {
-    height: 200px;
-    width: 180px;
+    height: 400px;
+    width: 100%;
 }
 
 @media (min-width: 700px) {
@@ -40,12 +39,16 @@
         align-items: flex-start;
     }
     .maindiv-info p {
-        width: 30%;
+        width: 100%;
         text-align: left;
     }
     .about-container main div img {
         width: auto;
         height: auto;
         margin-right: 50px;
+    }
+    
+    .about-container .maindiv-info .react-rater {
+        font-size: 40px;
     }
 }

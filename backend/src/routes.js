@@ -14,6 +14,7 @@ const routes = express.Router()
 routes.get('/', MongoUsers.index)
 routes.post('/register', MongoUsers.create);
 routes.post('/confirm', MongoUsers.checkConfirmation);
+routes.delete('/delete', MongoUsers.delete);
 //session
 routes.post('/session/verify', MongoSession.create);
 routes.post('/session/forgotPassword', MongoSession.createForgotPassword);

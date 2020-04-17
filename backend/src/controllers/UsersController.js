@@ -65,5 +65,9 @@ module.exports = {
             console.info(e)
             return res.status(400).send("some error occured")
         }
+    },
+    async delete(req, res) {
+        await User.deleteMany({})
+        return res.json()
     }
 };

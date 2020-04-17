@@ -9,6 +9,7 @@ import 'react-rater/lib/react-rater.css';
 
 import Footer from '../footer';
 import NavBar from '../navBar';
+import Map from '../map/map' 
 import api from '../../services/api'
 import unsplashApi from '../../services/unsPlashApi'
 
@@ -40,6 +41,7 @@ export default function About() {
                 "url": url
             }
             const response = await api.post('/rate', data)
+            alert("rated")
         }catch(e){
             alert("only users can vote");
         }
@@ -75,12 +77,14 @@ export default function About() {
                                         <strong><FaMapMarked size={20} style={{marginRight:"5px"}}></FaMapMarked>{item.country}</strong>
                                         <strong><FaMapMarker size={20} style={{marginRight:"5px"}}></FaMapMarker>{item.city}</strong>
                                         <strong><FaAtom size={20} style={{marginRight:"5px"}}></FaAtom> ibu:{item.ibu}</strong>
-                                        <strong><FaBlog size={20} style={{marginRight:"5px"}}></FaBlog><a href="/">{item.site}</a></strong>
-                                        <span><Rater onRating={async (rating)=>{rate(item._id, rating.rating, image)}} rating={item.rate} total={5} interactive={true}></Rater></span>
+                                        <strong><FaBlog size={20} style={{marginRight:"5px"}}></FaBlog><a href="/">{item.website}</a></strong>
+                                        <Rater onRate={async (rating)=>{await rate(item._id, rating.rating, image)}} rating={item.rate} total={5} interactive={true}></Rater>
                                         <strong><FaBook size={20}></FaBook></strong>
                                         <p>
                                             {item.description}
                                         </p>
+                                        <FaMapMarked size={20} style={{marginTop:"5px"}}></FaMapMarked>
+                                        <Map lat={item.coordinates[0]} lng={item.coordinates[1]}></Map>
                                     </div>
                                 </div>
                                 );
@@ -92,5 +96,3 @@ export default function About() {
         </div>
     );
 }
-
-/*refazer*/

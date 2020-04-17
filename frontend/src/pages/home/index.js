@@ -58,7 +58,7 @@ export default function Home() {
                 <div>
                     <span>
                         <Link to={route} style={{textDecoration:'none'}}>
-                        <strong>{log}</strong>
+                        <strong style={{marginRight:"15px"}}>{log}</strong>
                         <FaUser size={30} color='white'></FaUser>
                         </Link>
                     </span>
