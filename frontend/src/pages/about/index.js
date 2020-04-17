@@ -41,7 +41,6 @@ export default function About() {
                 "url": url
             }
             const response = await api.post('/rate', data)
-            alert("rated")
         }catch(e){
             alert("only users can vote");
         }
